@@ -1,0 +1,15 @@
+table 'Scheduled Trend Series Selector'
+	lineageTag: 5db65dd9-b6d5-40ef-b13f-c5b294e71bfd
+
+	column Series
+		dataType: string
+		lineageTag: 341b8755-f9d5-4530-b818-31f3413d38e9
+		summarizeBy: none
+		sourceColumn: [Series]
+
+		annotation SummarizationSetBy = User
+
+	partition 'Scheduled Trend Series Selector' = calculated
+		mode: import
+		source = DATATABLE("Series", STRING, {{"Scheduled %"}, {"Scheduled in 3D %"}, {"Scheduled in 7D %"}, {"Scheduled in 10D %"}})
+

@@ -1,0 +1,1896 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "CD show slicers",
+  "name": "42fc45e70eb8607b3ca3",
+  "options": {
+    "targetVisualNames": [],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "fundedmonitor",
+    "filters": {
+      "byExpr": [
+        {
+          "name": "499be4edce9651e42194",
+          "type": "RelativeDate",
+          "filter": {
+            "Version": 2,
+            "From": [
+              {
+                "Name": "a",
+                "Entity": "Appt Time And Count",
+                "Type": 0
+              }
+            ],
+            "Where": [
+              {
+                "Condition": {
+                  "Between": {
+                    "Expression": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "a"
+                          }
+                        },
+                        "Property": "request_day"
+                      }
+                    },
+                    "LowerBound": {
+                      "DateSpan": {
+                        "Expression": {
+                          "DateAdd": {
+                            "Expression": {
+                              "DateAdd": {
+                                "Expression": {
+                                  "Now": {}
+                                },
+                                "Amount": 1,
+                                "TimeUnit": 0
+                              }
+                            },
+                            "Amount": -24,
+                            "TimeUnit": 2
+                          }
+                        },
+                        "TimeUnit": 0
+                      }
+                    },
+                    "UpperBound": {
+                      "DateSpan": {
+                        "Expression": {
+                          "Now": {}
+                        },
+                        "TimeUnit": 0
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Appt Time And Count"
+                }
+              },
+              "Property": "request_day"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "fundedmonitor": {
+        "visualContainers": {
+          "line_month": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "77cf2cf86e7220e9268b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d76022a747a9581e0ab0",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Funded %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "1f2feac8050015260c07",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Funded in 30D %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "87d7d1d24d50d61626d3",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Funded in 60D %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5639607ae20ed31bc567",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Funded in 90D %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "line_week": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "cb35e237f0c81bc4a718",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0e444bd99b456e6c0048",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Funded 0-30 Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "926319566bcbd42cbe55",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Funded 30-60 Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0d818633faf04cac4ac2",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Funded 60-90 Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4f76658d24f6c35d9fce",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Funded 90+ Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "slicer_date": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "7c2899210759d350373b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "datecreated"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "a",
+                                "Entity": "Appt Time And Count",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Comparison": {
+                                    "ComparisonKind": 2,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "a"
+                                          }
+                                        },
+                                        "Property": "datecreated"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "datetime'2026-01-01T00:00:00'"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "startDate": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "datetime'2026-01-01T00:00:00'"
+                            }
+                          }
+                        },
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "datecreated"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "slicer_trend_series": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ff90e5f142d2764d19d6",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Funded Trend Series Selector"
+                        }
+                      },
+                      "Property": "Series"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Funded Trend Series Selector"
+                        }
+                      },
+                      "Property": "Series"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "60c7e0c3e6c656093b8a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "46335866b30816401606",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "34aca0336c19a6843cbe",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Scheduled %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "12429cc7467c59910503",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Scheduled in 3D %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9dacf967c000ac849b03",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Scheduled in 7D %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "506e4c906cd263178078",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Trend Toggle - Scheduled in 10D %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "a7fd2ed4655ce140931e": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d8e053706e7a914066a8",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3a51ab007e569114db66",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Scheduled 0-3 Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6a500c703498da261f31",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Scheduled 3-7 Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "938e3f4a7f3b5d262f2c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Scheduled 7-10 Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "7eadc7168c13b353f80e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Scheduled 10+ Days % Overall"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "acd949aa1680ada350ea": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "5fb4c0da33b74ab6b526": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "b65a80fcb8e80b30e4da",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Scheduled Trend Series Selector"
+                        }
+                      },
+                      "Property": "Series"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Scheduled Trend Series Selector"
+                        }
+                      },
+                      "Property": "Series"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "7a8dba8ea34e5f7fffab": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "97ca92fa57235d76f363",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "appoitnment service"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "appoitnment service"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "6b4584ce42639d56707a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "64d2d5c459c3c2e16c99",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firm_state"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firm_state"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8ec2fdbcfde2713fb07d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "88ddb88c8370eeaf9260",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "rvp"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "rvp"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "6fde6c64a8e682e803b5": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c69261ec189d86948513",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firmname"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firmname"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "eb182d1f57adeb84d20a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "9d328e5eecc78b40310a",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "0de5ba63bb4bc4d6b710": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "5bc4b8cc7c3a08f3038e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "case_coordinator"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "case_coordinator"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "0220898d1612a10b7a41": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "872e4c8a454caa457e04",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Facility_Groups"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Facility_Groups"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "a37beb58dcb99a424458": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "38438fa353d00aacbcd5",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "current_status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "current_status"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "50c28e0f0337f3fc3789": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "51408ed8448f0c264c1b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "region"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "region"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "411d0005d86eef39cb2e": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "46292eed23842b0e311d",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "a",
+                        "Entity": "Appt Time And Count",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "In": {
+                                "Expressions": [
+                                  {
+                                    "Column": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Source": "a"
+                                        }
+                                      },
+                                      "Property": "assigned_user"
+                                    }
+                                  }
+                                ],
+                                "Values": [
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "null"
+                                      }
+                                    }
+                                  ]
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "assigned_user"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "assigned_user"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "9fac363c1cb2d45d5881": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "30f7f10c31b8a5fb424f",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Non-Standard/Do_Not_Schedule_Groups"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Non-Standard/Do_Not_Schedule_Groups"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "b1b59724312345b31b93": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e55e281e1a0ab999f6e4",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "internal_user"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "internal_user"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "536bf1f3ffe60dcafd89": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "bcdbed5a42cdf9c23ed4": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "adccd0439b708e03f9b1",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "first_visit"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "first_visit"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "c5ee49888cec70f6086e": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "0fd81b1ab0b924934360": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a384d8c050a9d587da76",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_day"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_day"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_day"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "fba50b6c6f90277b0bbf": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "6d7ee5b286dc7126c3c3",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Firm_Group"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Firm_Group"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "e904a4a6386d5613e5cd": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "979fe6d3bbaa2e962221",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "facilityname"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "facilityname"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "a99d067e25e18669d1f9": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "ca2e9f014b5ffa2ee5d1": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "c7559b49ee647f4cadee": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d0eed2c489435b586e74",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "ScheduledBy"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "ScheduledBy"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "35a1542e14a8f8f35c96": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "002c0c4938c876b6d5ad",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "scheduling regions"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "scheduling regions"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "096cec506df3f436d8af": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "c93cefb50889cc964244": {
+            "isHidden": false
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

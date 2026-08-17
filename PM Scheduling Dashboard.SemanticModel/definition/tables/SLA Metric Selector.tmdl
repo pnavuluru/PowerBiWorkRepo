@@ -1,0 +1,15 @@
+table 'SLA Metric Selector'
+	lineageTag: 8f0f9f36-0e2f-43ac-b7e0-3f196473dcdf
+
+	column Metric
+		dataType: string
+		lineageTag: cf8f35c9-5f2d-4799-b72a-af9f0d51ed39
+		summarizeBy: none
+		sourceColumn: [Metric]
+
+		annotation SummarizationSetBy = User
+
+	partition 'SLA Metric Selector' = calculated
+		mode: import
+		source = DATATABLE("Metric", STRING, {{"Scheduled %"}, {"Scheduled in 3D %"}, {"Scheduled in 7D %"}, {"Scheduled in 10D %"}, {"% Funded in 30 Days"}, {"% Funded in 60 Days"}, {"% Funded in 90 Days"}, {"% Successfully Scheduled"}, {"% Successfully Funded"}, {"Canceled %"}})
+

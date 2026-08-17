@@ -1,0 +1,15 @@
+table 'Funded Trend Series Selector'
+	lineageTag: 645fd312-4f1f-4469-bf96-48988e46ca1d
+
+	column Series
+		dataType: string
+		lineageTag: 97f2f68f-1b3d-44b4-a8c8-b57e9957bb89
+		summarizeBy: none
+		sourceColumn: [Series]
+
+		annotation SummarizationSetBy = User
+
+	partition 'Funded Trend Series Selector' = calculated
+		mode: import
+		source = DATATABLE("Series", STRING, {{"Funded %"}, {"Funded in 30D %"}, {"Funded in 60D %"}, {"Funded in 90D %"}})
+

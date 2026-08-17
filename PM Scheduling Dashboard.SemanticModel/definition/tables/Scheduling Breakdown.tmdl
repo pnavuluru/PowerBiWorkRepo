@@ -1,0 +1,320 @@
+table 'Scheduling Breakdown'
+	lineageTag: 5b58a669-719f-490b-bbb6-7d7501185e7e
+
+	measure Totalconversion = calculate(count('Scheduling Breakdown'[ID]),ALLEXCEPT('Scheduling Breakdown', 'Scheduling Breakdown'[facilityname],'Scheduling Breakdown'[facilitystate],'Scheduling Breakdown'[treatment_type],'Scheduling Breakdown'[mo_requested],'Scheduling Breakdown'[rvp],'Scheduling Breakdown'[requestedfirm],'Scheduling Breakdown'[firm_group],'Scheduling Breakdown'[Region]))
+		formatString: 0
+		lineageTag: 40364cfe-6dbc-4c59-8321-091a3cb65d33
+
+		changedProperty = IsHidden
+
+	measure SumofConversion =
+			
+			sum
+			('Scheduling Breakdown'[conversion_flag])
+		formatString: 0
+		lineageTag: 70cb9228-6b4b-4a98-be0b-a68ad0f2e85e
+
+		changedProperty = IsHidden
+
+	measure '% Converted' =
+			
+			divide
+			(
+			[SumofConversion]
+			,
+			[Totalconversion]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 00d3c34b-8b26-42db-8b09-2d42fbe413de
+
+		changedProperty = IsHidden
+
+	measure Cumulativeconversionsum =
+			
+			calculate
+			(
+			sum
+			('Scheduling Breakdown'[conversion_flag]),
+			filter
+			(
+			ALLEXCEPT(
+			'Scheduling Breakdown', 'Scheduling Breakdown'[facilityname],'Scheduling Breakdown'[facilitystate],'Scheduling Breakdown'[treatment_type],'Scheduling Breakdown'[mo_requested],'Scheduling Breakdown'[rvp],'Scheduling Breakdown'[requestedfirm],'Scheduling Breakdown'[firm_group],'Scheduling Breakdown'[Region]), 'Scheduling Breakdown'[days_to_schedule] <=
+			max
+			('Scheduling Breakdown'[days_to_schedule])))
+		formatString: 0
+		lineageTag: 292b894b-1d09-4154-a909-0b322fe5a9df
+
+		changedProperty = IsHidden
+
+	measure '% cumulativelyconverted' =
+			
+			divide
+			(
+			[Cumulativeconversionsum]
+			,
+			[TTLConversion]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e28f30e6-16cb-4be1-bf28-50589ef4a62f
+
+		changedProperty = IsHidden
+
+	measure TTLConversion = CALCULATE(COUNT('Scheduling Breakdown'[ID]),ALLEXCEPT('Scheduling Breakdown', 'Scheduling Breakdown'[facilityname],'Scheduling Breakdown'[facilitystate],'Scheduling Breakdown'[treatment_type],'Scheduling Breakdown'[mo_requested],'Scheduling Breakdown'[rvp],'Scheduling Breakdown'[requestedfirm],'Scheduling Breakdown'[firm_group],'Scheduling Breakdown'[Region]))
+		formatString: 0
+		lineageTag: 6cb4b904-b75b-40f8-b3cd-81b3cbc5d1e6
+
+		changedProperty = IsHidden
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 496d47c9-b351-4806-862e-70ec916beab3
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OldValue
+		dataType: string
+		lineageTag: 8a18f418-418a-4f09-9162-c6e7b0c7f265
+		summarizeBy: none
+		sourceColumn: OldValue
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewValue
+		dataType: string
+		lineageTag: 98110322-64bb-4a51-80a1-378c38403171
+		summarizeBy: none
+		sourceColumn: NewValue
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Module
+		dataType: string
+		lineageTag: 350e44dd-2988-46e3-afe9-704cff1e5891
+		summarizeBy: none
+		sourceColumn: Module
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Action
+		dataType: string
+		lineageTag: 0ee46928-26e3-4bec-8bdc-5c5da2850643
+		summarizeBy: none
+		sourceColumn: Action
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 6500d4fb-52c3-46b3-bc2b-4e19dff8a8aa
+		summarizeBy: none
+		sourceColumn: Description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceId
+		dataType: string
+		lineageTag: e12cfee3-c032-4567-8cd1-8f9a6f7e7be8
+		summarizeBy: none
+		sourceColumn: SourceId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceName
+		dataType: string
+		lineageTag: 018b4cde-88f0-424f-83b0-fa63d2bdb81f
+		summarizeBy: none
+		sourceColumn: SourceName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 564d359c-7c0d-4246-8db6-e7aca0aa724b
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 48c12cff-88ea-4184-ac83-ab2e96e7a219
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 808b8bf0-3af7-4107-883f-9ac51ee8650f
+			defaultHierarchy: LocalDateTable_98d8c2f3-001f-4a2c-bf19-a704fb6b5f7f.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_scheduled
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6e80ac26-7c79-4676-bac4-62ede6b4a473
+		summarizeBy: none
+		sourceColumn: date_scheduled
+
+		variation Variation
+			isDefault
+			relationship: 75067182-77dc-47a1-8c98-bfbea4a58a69
+			defaultHierarchy: LocalDateTable_bfcb9b6e-ac77-4f86-9658-5b12b9bce4f3.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversion_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 35e2a4b4-37c6-4c62-8d47-152f913c2b30
+		summarizeBy: sum
+		sourceColumn: conversion_flag
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_to_schedule
+		dataType: int64
+		formatString: 0
+		lineageTag: 4626ac79-ab06-4fbc-928a-31a763097b44
+		summarizeBy: sum
+		sourceColumn: days_to_schedule
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column mo_requested
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c7c32e0d-f420-4fb9-94a0-77f115f261cf
+		summarizeBy: none
+		sourceColumn: mo_requested
+
+		variation Variation
+			isDefault
+			relationship: d2d6b791-b1cd-424d-9add-2d4413984cf8
+			defaultHierarchy: LocalDateTable_ffe74d72-d991-48ef-85ab-e2514b913e79.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ScheduledBy
+		dataType: string
+		lineageTag: 3761c304-3f0d-4a72-bd09-6a12b2430740
+		summarizeBy: none
+		sourceColumn: ScheduledBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column facilitystate
+		dataType: string
+		lineageTag: 0e768f9d-c858-4803-b578-a0fb75411aba
+		summarizeBy: none
+		sourceColumn: facilitystate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column facilityname
+		dataType: string
+		lineageTag: 36429a21-529a-4149-8a4d-04df3a40038a
+		summarizeBy: none
+		sourceColumn: facilityname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column requestedfirm
+		dataType: string
+		lineageTag: 351296b8-f0cc-4c49-abf2-1d0f7449f7bb
+		summarizeBy: none
+		sourceColumn: requestedfirm
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column treatment_type
+		dataType: string
+		lineageTag: ad518af7-89a1-42e7-aebc-be4ce1a0bc0c
+		summarizeBy: none
+		sourceColumn: treatment_type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column rvp
+		dataType: string
+		lineageTag: 00cb10dd-f5bf-49c3-84be-e4b02c7c72cf
+		summarizeBy: none
+		sourceColumn: rvp
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: ab567461-73c1-4d3e-996a-b6467564841f
+		summarizeBy: none
+		sourceColumn: Region
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column firm_group
+		dataType: string
+		lineageTag: 8e8a0e7b-9832-4f5a-b052-c39a4ce3aab2
+		summarizeBy: none
+		sourceColumn: firm_group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Scheduling Breakdown' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("medprdsql02.canyonmedicalbilling.com", "financemetrics", [Query="#(lf)#(lf)IF OBJECT_ID('tempdb..#requests') IS NOT NULL DROP TABLE #requests #(lf)#(lf)select#(lf)#(tab)a.*,#(lf)#(tab)(select max(b.createddate) as scheduled from MoveDocsV4.dbo.AuditLogs b where module = 'Appointment Request' and newvalue = 'Appointment Scheduled'#(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)and a.sourceid = b.sourceid) as date_scheduled#(lf)into #requests#(lf)from MoveDocsV4.dbo.AuditLogs a#(lf)where module = 'Appointment Request'#(lf)#(tab)and [action] = 'New Appointment Request'#(lf)#(lf)select#(lf)#(tab)a.*,#(lf)#(tab)case when a.date_scheduled is null then 0 else 1 end as conversion_flag,#(lf)#(tab)case when datepart(dw, a.createddate) = 1 #(lf)#(tab)then datediff(day,convert(date,a.createddate),convert(date,a.date_scheduled)) - 1 - (2*DATEDIFF(wk, convert(date,a.CreatedDate),convert(date,a.date_scheduled)))#(lf)#(tab)else datediff(day,convert(date,a.createddate),convert(date,a.date_scheduled)) - (2*DATEDIFF(wk, convert(date,a.CreatedDate),convert(date,a.date_scheduled))) end as days_to_schedule,#(lf)#(tab)eomonth(b.datecreated) as mo_requested,#(lf)#(tab)case when al.createdby not like '%@movedocs.com' and al.createdby not like '%@medportbilling.com' and al.createdby not like '%@lienservicinggroup.com'#(lf)and al.createdby not like '%@medport.com' and al.createdby not like '%@canyonmedicalbilling.com' and al.createdby not like '%@trimed-billing.com'#(lf)and al.createdby not like 'ssomb%' and al.createdby not like 'sssomb%' then 'External' when date_scheduled is null then null else 'Internal' end as ScheduledBy,#(lf)#(tab)b.facilitystate,#(lf)#(tab)b.facilityname, #(lf)        r.rvp,#(lf)        case when team = 'CS' then 'Scheduling' else team end as 'Region', #(lf)        vf.firm_group,#(lf)#(tab)b.requestedfirm,#(lf)#(tab)b.requiresservices as treatment_type#(lf)from #requests a#(lf)#(tab)left join movedocsv4.dbo.appointmentrequests b on a.sourceid = b.id#(lf)        left join analytics.dbo.state_rvp r on b.facilitystate = r.state#(lf)        left join [Analytics].[dbo].[VIPFirms] vf on replace(b.firmid,'undefined',null) = vf.firm_id#(lf)        left join analytics.dbo.scheduling_ownership so on so.appt_id = b.id#(lf)#(tab)#(tab)left join financemetrics.dbo._snapshot_cimianalysisanalytics caa on caa.AccountId = b.dosaccountid#(lf)#(tab)left join movedocsv4.dbo.auditlogs al on a.sourceid = al.sourceid and a.date_scheduled = al.createddate#(lf)#(tab)where #(lf)#(tab)location not like '%grs%'#(tab)#(tab)#(tab)and #(tab)#(lf)location not in ('IFA','IFI','OHF','OHC','TMC','TDC')#(tab)#(tab)#(tab)#(tab)"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

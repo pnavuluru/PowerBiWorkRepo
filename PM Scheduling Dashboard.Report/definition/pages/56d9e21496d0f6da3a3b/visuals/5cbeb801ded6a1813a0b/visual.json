@@ -1,0 +1,33 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "5cbeb801ded6a1813a0b",
+  "position": {
+    "x": 942.70439410002791,
+    "y": 0,
+    "z": 13000,
+    "height": 76.731753008141808,
+    "width": 333.06640041995615,
+    "tabOrder": 19001
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Total Access Analytics definition used here combines C3 Total Access with historic Facilitation, Total Care and Total Access Case Owner"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

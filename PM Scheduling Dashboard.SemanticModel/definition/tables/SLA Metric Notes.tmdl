@@ -1,0 +1,34 @@
+table 'SLA Metric Notes'
+	lineageTag: 6ef2f3c0-39a9-4cfd-a9e6-78d6d927eb2f
+
+	measure 'Selected Metric Guidance Note' =
+			
+			VAR Metric = SELECTEDVALUE('SLA Metric Selector'[Metric])
+			RETURN
+			    COALESCE(
+			        LOOKUPVALUE('SLA Metric Notes'[Note], 'SLA Metric Notes'[Metric], Metric),
+			        "Select one SLA metric to see guidance."
+			    )
+		displayFolder: SLA comparison
+		lineageTag: 4b3f10f8-6f14-4b67-afce-a7bf103bc04d
+
+	column Metric
+		dataType: string
+		lineageTag: 8b4789cc-a7f2-44b3-b52e-35e6b9a4f2c6
+		summarizeBy: none
+		sourceColumn: [Metric]
+
+		annotation SummarizationSetBy = User
+
+	column Note
+		dataType: string
+		lineageTag: 6ed07cf6-9f6f-44ca-a2a6-8f6d081e3d20
+		summarizeBy: none
+		sourceColumn: [Note]
+
+		annotation SummarizationSetBy = User
+
+	partition 'SLA Metric Notes' = calculated
+		mode: import
+		source = DATATABLE("Metric", STRING, "Note", STRING, {{"Scheduled %", "Scheduling metrics are raw operational rates; the most recent period is often lower while new records are still in flight."}, {"Scheduled in 3D %", "Scheduling metrics are raw operational rates; the most recent period is often lower while new records are still in flight."}, {"Scheduled in 7D %", "Scheduling metrics are raw operational rates; the most recent period is often lower while new records are still in flight."}, {"Scheduled in 10D %", "Scheduling metrics are raw operational rates; the most recent period is often lower while new records are still in flight."}, {"% Funded in 30 Days", "30-day funding is not mature for the latest 30 days. Avoid using a window that includes the most recent 30 days."}, {"% Funded in 60 Days", "60-day funding is not mature for the latest 60 days. Avoid using a window that includes the most recent 60 days."}, {"% Funded in 90 Days", "90-day funding is not mature for the latest 90 days. Avoid using a window that includes the most recent 90 days."}, {"% Successfully Scheduled", "This is a raw operational success rate; the latest period is typically lower until the cohort matures."}, {"% Successfully Funded", "This is a raw operational success rate; the latest period is typically lower until the cohort matures."}, {"Canceled %", "Cancellation rate is a raw operational metric; most recent periods can shift as late status updates arrive."}})
+

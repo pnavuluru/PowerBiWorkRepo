@@ -1,0 +1,2070 @@
+table 'Appt Time And Count'
+	lineageTag: 0293f98b-b959-4b13-b8aa-fff89c9bd0fb
+
+	measure 'Average Time To Scheduled' = sum('Appt Time And Count'[total_time_to_schedule]) / sum('Appt Time And Count'[Scheduled])
+		lineageTag: de823e72-e50d-418b-a02f-f092e43db878
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Std Dev TTS' = STDEV.P('Appt Time And Count'[total_time_to_schedule])
+		lineageTag: c4c5775a-4423-477b-947a-b102b7802657
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lower End TTS' = PERCENTILE.INC('Appt Time And Count'[total_time_to_schedule],0.1)
+		lineageTag: ce698ead-a1a0-4db7-ac62-bf0584444d93
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Upper End TTS' = percentile.inc('Appt Time And Count'[total_time_to_schedule], 0.9)
+		lineageTag: 260217be-d787-41f6-a9cc-0c9102d6902a
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'First Scheduled %' = sum('Appt Time And Count'[Scheduled]) / sum('Appt Time And Count'[Counter])
+		formatString: 0%;-0%;0%
+		lineageTag: e879cfe5-d9c9-47b8-9e8f-343ef89cb661
+
+		changedProperty = IsHidden
+
+	measure MovingAverageLast6Weeks =
+			
+			AVERAGEX(
+			    DATESINPERIOD('Appt Time And Count'[first_schedule_Date], LASTDATE('Appt Time And Count'[first_schedule_Date]), -45, DAY),
+			    [Total Scheduled]
+			)
+		lineageTag: 1469e31b-d44f-4e09-b92d-9fc686ba58e3
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Scheduled' = sum('Appt Time And Count'[Scheduled])
+		formatString: 0
+		lineageTag: cc7c6b93-bf12-4e59-82b1-2fbe7b37eeed
+
+		changedProperty = IsHidden
+
+	measure 'Total Appts' = sum('Appt Time And Count'[Counter])
+		formatString: 0
+		lineageTag: 3de68747-f89b-400f-8975-b8c37c3ec344
+
+		changedProperty = IsHidden
+
+	measure 'Upper End TTSe' = percentile.inc('Appt Time And Count'[total_time_to_seen], 0.9)
+		lineageTag: f51f25d5-5c36-440c-bd1d-c655a6dd912e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Upper End TTF' = percentile.inc('Appt Time And Count'[total_time_to_bill], 0.9)
+		lineageTag: 2d9fd0e7-6628-4a67-9c9d-0b93f4318022
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lower End TTF' = percentile.inc('Appt Time And Count'[total_time_to_bill], 0.1)
+		lineageTag: b370b3c2-6d94-41a6-8da6-4b9812e0973b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lower End TTSe' = percentile.inc('Appt Time And Count'[total_time_to_seen], 0.1)
+		lineageTag: edece4a3-2de6-4b86-88f8-139c2b9e9c83
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Conversion %' = sum('Appt Time And Count'[funded]) / sum('Appt Time And Count'[Counter])
+		formatString: 0%;-0%;0%
+		lineageTag: 153b7408-debd-4420-9e12-ff9fb38fe855
+
+	measure 'Canceled %' = sum('Appt Time And Count'[canceled]) / sum('Appt Time And Count'[Counter])
+		formatString: 0%;-0%;0%
+		lineageTag: ad0af3d9-6235-4276-a69a-9c62b2dd45f7
+
+	measure Success% = SUM('Appt Time And Count'[success_result])/sum('Appt Time And Count'[Counter])
+		formatString: 0%;-0%;0%
+		lineageTag: 93160b50-8148-4ad7-9a9c-ee3acbc27b58
+
+	measure 'Total IDs' = DISTINCTCOUNT('Appt Time And Count'[id])
+		formatString: 0
+		displayFolder: Schedule measures
+		lineageTag: 4797454d-738b-4cab-95c3-18c5fc9d0a29
+
+	measure 'Successfully Scheduled' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Schedule measures
+		lineageTag: 68eb5ace-0db6-4e6e-822a-f6d4914729a9
+
+	measure '% Successfully Scheduled' = DIVIDE([Successfully Scheduled], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: e27e515b-9fb2-4b57-99a3-d72d036fb15d
+
+	measure 'SLA Data As Of Date' =
+			
+			VAR MaxCreated =
+			    CALCULATE(MAX('Appt Time And Count'[datecreated]), ALL('Appt Time And Count'))
+			VAR MaxScheduled =
+			    CALCULATE(MAX('Appt Time And Count'[first_schedule_date]), ALL('Appt Time And Count'))
+			VAR MaxFunded =
+			    CALCULATE(MAX('Appt Time And Count'[fundeddate]), ALL('Appt Time And Count'))
+			RETURN
+			    MAX(MaxCreated, MAX(MaxScheduled, MaxFunded))
+		formatString: General Date
+		lineageTag: 21740bbb-6e48-4127-95ae-2e1f27877109
+
+	measure 'Trend Mode Selected' = SELECTEDVALUE('Trend Granularity'[Mode], "MoM")
+		displayFolder: Trend measures
+		lineageTag: b6e9cc0d-b814-44bf-a224-77d703588e81
+
+	measure '% Successfully Scheduled Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Successfully Scheduled])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 1faf1bdb-7de7-45ff-b0e4-a57827ac4fc6
+
+	measure 'Successfully Funded' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[fundeddate])
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Funded measures
+		lineageTag: 5ab06252-dbad-4605-9bcd-45aa7b67dda9
+
+	measure '% Successfully Funded' = DIVIDE([Successfully Funded], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: bed6f746-31ac-4876-b83f-f358a29ee6f8
+
+	measure '% Successfully Funded Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Successfully Funded])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: f6af482e-d308-40d2-ad6d-3da9f41bcbba
+
+	measure '% Funded in 30 Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 30
+			VAR FundedWithin30Days =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) >= 0
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) <= 30
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(FundedWithin30Days, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: a3edd1c9-5935-454f-b116-25776eb16c3f
+
+	measure '% Funded in 30 Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Funded in 30 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: ad92ed14-5a35-4506-8f37-3eea7bf12b07
+
+	measure '% Funded in 60 Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 60
+			VAR FundedWithin60Days =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) >= 0
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) <= 60
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(FundedWithin60Days, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: e47ca2b8-13e9-408d-97cc-07b231f3359e
+
+	measure '% Funded in 60 Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Funded in 60 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: ba01035d-0b30-4e00-b24a-2b0bead2239f
+
+	measure '% Funded in 90 Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 90
+			VAR FundedWithin90Days =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) >= 0
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) <= 90
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(FundedWithin90Days, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: 077ae773-87be-4f17-b6d9-b373c189f4bc
+
+	measure '% Funded in 90 Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Funded in 90 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 277ff299-8017-4082-ab9f-41deabcfcaf9
+
+	measure 'Funded 0-30 Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) >= 0
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) <= 30
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Funded measures
+		lineageTag: 98d5f845-de3c-494f-826c-63e94d3095c6
+
+	measure 'Funded 30-60 Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) > 30
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) <= 60
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Funded measures
+		lineageTag: df39ed2a-b984-4bf9-8b15-81e0e23d7b1b
+
+	measure 'Funded 60-90 Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) > 60
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) <= 90
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Funded measures
+		lineageTag: bba9bec2-2e86-46b6-8f6e-91785682f914
+
+	measure 'Funded 90+ Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[fundeddate])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[fundeddate], DAY) > 90
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Funded measures
+		lineageTag: 4b5eef98-ea9f-43c4-82e2-d6f9cfb4d008
+
+	measure '% Scheduled in 0-3 Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Scheduled in 0-3 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 212e5ba0-6198-49ec-9275-fef34005407f
+
+	measure '% Scheduled in 3-7 Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Scheduled in 3-7 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 6375bb03-a4e1-4357-bf2d-271ee9a35df4
+
+	measure '% Scheduled in 7-10 Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Scheduled in 7-10 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: f98eb4ca-73f0-4bf4-bef4-09ebf1b9d9ef
+
+	measure '% Scheduled in 10+ Days Trend' =
+			
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Scheduled in 10+ Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 4eb9aa85-a3ce-4550-bdc3-a9722f710011
+
+	measure '% Scheduled in 0-3 Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 3
+			VAR ScheduledIn0To3Days =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) >= 0
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) <= 3
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(ScheduledIn0To3Days, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: f5c3cb06-61b8-46af-a4dd-2f5fe20a1e48
+
+	measure '% Scheduled in 3-7 Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 7
+			VAR ScheduledIn3To7Days =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) > 3
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) <= 7
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(ScheduledIn3To7Days, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: bb16ad9e-7ed2-446b-9164-6a0d5b4860ac
+
+	measure '% Scheduled in 7-10 Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 10
+			VAR ScheduledIn7To10Days =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) > 7
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) <= 10
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(ScheduledIn7To10Days, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: ccfd107a-00c8-40d5-b27b-f6018ab5db3f
+
+	measure '% Scheduled in 10+ Days' =
+			
+			VAR AsOfDate = [SLA Data As Of Date]
+			VAR IsMature =
+			    MAX('Appt Time And Count'[datecreated]) <= AsOfDate - 10
+			VAR ScheduledIn10PlusDays =
+			    CALCULATE(
+			        DISTINCTCOUNT('Appt Time And Count'[id]),
+			        KEEPFILTERS(
+			            FILTER(
+			                'Appt Time And Count',
+			                NOT ISBLANK('Appt Time And Count'[datecreated])
+			                    && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                    && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) > 10
+			            )
+			        )
+			    )
+			RETURN
+			    IF(IsMature, DIVIDE(ScheduledIn10PlusDays, [Total IDs]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: b2fa8d42-2d12-401f-82f3-685336508503
+
+	measure 'Scheduled 0-3 Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) >= 0
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) <= 3
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Schedule measures
+		lineageTag: ce01a79d-61ca-4876-aece-aa2f3166fccd
+
+	measure 'Scheduled 3-7 Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) > 3
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) <= 7
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Schedule measures
+		lineageTag: d714dda5-bde7-440d-bfe6-b500837ae15c
+
+	measure 'Scheduled 7-10 Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) > 7
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) <= 10
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Schedule measures
+		lineageTag: 31b0f810-34c4-4ecf-8df1-99caf1c0e8dc
+
+	measure 'Scheduled 10+ Days' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Appt Time And Count'[id]),
+			    KEEPFILTERS(
+			        FILTER(
+			            'Appt Time And Count',
+			            NOT ISBLANK('Appt Time And Count'[datecreated])
+			                && NOT ISBLANK('Appt Time And Count'[first_schedule_date])
+			                && DATEDIFF('Appt Time And Count'[datecreated], 'Appt Time And Count'[first_schedule_date], DAY) > 10
+			        )
+			    )
+			)
+		formatString: 0
+		displayFolder: Schedule measures
+		lineageTag: 7c2f91d4-7ca2-4ec3-b476-af508157be96
+
+	measure 'Selected SLA Metric' =
+			
+			VAR Metric = SELECTEDVALUE('SLA Metric Selector'[Metric], "Scheduled %")
+			RETURN
+			    SWITCH(
+			        Metric,
+			        "Scheduled %", [% Successfully Scheduled],
+			        "Scheduled in 3D %", [% Scheduled in 0-3 Days],
+			        "Scheduled in 7D %", [% Scheduled in 0-7 Days],
+			        "Scheduled in 10D %", [% Scheduled in 0-10 Days],
+			        "% Funded in 30 Days", [% Funded in 30 Days],
+			        "% Funded in 60 Days", [% Funded in 60 Days],
+			        "% Funded in 90 Days", [% Funded in 90 Days],
+			        "% Successfully Scheduled", [% Successfully Scheduled],
+			        "% Successfully Funded", [% Successfully Funded],
+			        "Canceled %", [Canceled %],
+			        BLANK()
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: d0f12825-d057-445e-8bce-d00bcc5ee0d4
+
+	measure 'Current Volume' =
+			
+			VAR CurrentStart = MIN('Current Period Dates'[Date])
+			VAR CurrentEnd = MAX('Current Period Dates'[Date])
+			VAR HasCurrentDates = NOT ISBLANK(CurrentStart) && NOT ISBLANK(CurrentEnd)
+			VAR CurrentEndExclusive = CurrentEnd + 1
+			RETURN
+			    IF(
+			        HasCurrentDates,
+			        CALCULATE(
+			            [Total IDs],
+			            FILTER(
+			                ALL('Appt Time And Count'[datecreated]),
+			                'Appt Time And Count'[datecreated] >= CurrentStart
+			                    && 'Appt Time And Count'[datecreated] < CurrentEndExclusive
+			            )
+			        )
+			    )
+		formatString: 0
+		displayFolder: SLA comparison
+		lineageTag: 8f52ed18-3bdb-42f8-a946-7f4762d93566
+
+	measure 'Prior Volume' =
+			
+			VAR PriorStart = MIN('Prior Period Dates'[Date])
+			VAR PriorEnd = MAX('Prior Period Dates'[Date])
+			VAR HasPriorDates = NOT ISBLANK(PriorStart) && NOT ISBLANK(PriorEnd)
+			VAR PriorEndExclusive = PriorEnd + 1
+			RETURN
+			    IF(
+			        HasPriorDates,
+			        CALCULATE(
+			            [Total IDs],
+			            FILTER(
+			                ALL('Appt Time And Count'[datecreated]),
+			                'Appt Time And Count'[datecreated] >= PriorStart
+			                    && 'Appt Time And Count'[datecreated] < PriorEndExclusive
+			            )
+			        )
+			    )
+		formatString: 0
+		displayFolder: SLA comparison
+		lineageTag: 737ce16f-2e0d-49d8-b907-e60f9600794c
+
+	measure 'Current Metric' =
+			
+			VAR CurrentStart = MIN('Current Period Dates'[Date])
+			VAR CurrentEnd = MAX('Current Period Dates'[Date])
+			VAR HasCurrentDates = NOT ISBLANK(CurrentStart) && NOT ISBLANK(CurrentEnd)
+			VAR CurrentEndExclusive = CurrentEnd + 1
+			RETURN
+			    IF(
+			        HasCurrentDates,
+			        CALCULATE(
+			            [Selected SLA Metric],
+			            FILTER(
+			                ALL('Appt Time And Count'[datecreated]),
+			                'Appt Time And Count'[datecreated] >= CurrentStart
+			                    && 'Appt Time And Count'[datecreated] < CurrentEndExclusive
+			            )
+			        )
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: d2556530-f4fb-46a7-842b-f88f3f8f65c4
+
+	measure 'Prior Metric' =
+			
+			VAR PriorStart = MIN('Prior Period Dates'[Date])
+			VAR PriorEnd = MAX('Prior Period Dates'[Date])
+			VAR HasPriorDates = NOT ISBLANK(PriorStart) && NOT ISBLANK(PriorEnd)
+			VAR PriorEndExclusive = PriorEnd + 1
+			RETURN
+			    IF(
+			        HasPriorDates,
+			        CALCULATE(
+			            [Selected SLA Metric],
+			            FILTER(
+			                ALL('Appt Time And Count'[datecreated]),
+			                'Appt Time And Count'[datecreated] >= PriorStart
+			                    && 'Appt Time And Count'[datecreated] < PriorEndExclusive
+			            )
+			        )
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: fa20db7d-2f5e-4316-99d1-9d23e3e2ef9e
+
+	measure 'Metric Diff (Current-Prior)' = [Current Metric] - [Prior Metric]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: 91f28c51-1cb4-4a61-b41d-fa4dc0a8b621
+
+	measure 'Impact 1 - Total Contribution (pp)' =
+			VAR SelectedField = SELECTEDVALUE('Comparision Parameter'[Comparision Parameter Fields], "Appt Time And Count[firmname]")
+			VAR IsFirmGroup = CONTAINSSTRING(SelectedField, "[Firm_Group]")
+			VAR IsFirmRegion = CONTAINSSTRING(SelectedField, "[firm_region]")
+			VAR IsFirmState = CONTAINSSTRING(SelectedField, "[firm_state]")
+			VAR IsFirmName = CONTAINSSTRING(SelectedField, "[firmname]")
+			VAR IsFacilityName = CONTAINSSTRING(SelectedField, "[facilityname]")
+			VAR IsFacilityState = CONTAINSSTRING(SelectedField, "[FacilityState]")
+			VAR IsEnterprise = CONTAINSSTRING(SelectedField, "[Enterprise]")
+			VAR CurrentDenom =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, CALCULATE([Current Volume], ALL('Appt Time And Count'[Firm_Group])),
+			        IsFirmRegion, CALCULATE([Current Volume], ALL('Appt Time And Count'[firm_region])),
+			        IsFirmState, CALCULATE([Current Volume], ALL('Appt Time And Count'[firm_state])),
+			        IsFacilityName, CALCULATE([Current Volume], ALL('Appt Time And Count'[facilityname])),
+			        IsFacilityState, CALCULATE([Current Volume], ALL('Appt Time And Count'[FacilityState])),
+			        IsEnterprise, CALCULATE([Current Volume], ALL('Appt Time And Count'[Enterprise])),
+			        CALCULATE([Current Volume], ALL('Appt Time And Count'[firmname]))
+			    )
+			VAR PriorDenom =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, CALCULATE([Prior Volume], ALL('Appt Time And Count'[Firm_Group])),
+			        IsFirmRegion, CALCULATE([Prior Volume], ALL('Appt Time And Count'[firm_region])),
+			        IsFirmState, CALCULATE([Prior Volume], ALL('Appt Time And Count'[firm_state])),
+			        IsFacilityName, CALCULATE([Prior Volume], ALL('Appt Time And Count'[facilityname])),
+			        IsFacilityState, CALCULATE([Prior Volume], ALL('Appt Time And Count'[FacilityState])),
+			        IsEnterprise, CALCULATE([Prior Volume], ALL('Appt Time And Count'[Enterprise])),
+			        CALCULATE([Prior Volume], ALL('Appt Time And Count'[firmname]))
+			    )
+			VAR RowImpact =
+			    VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			    VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			    RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			VAR IsRowScope =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, ISINSCOPE('Appt Time And Count'[Firm_Group]),
+			        IsFirmRegion, ISINSCOPE('Appt Time And Count'[firm_region]),
+			        IsFirmState, ISINSCOPE('Appt Time And Count'[firm_state]),
+			        IsFacilityName, ISINSCOPE('Appt Time And Count'[facilityname]),
+			        IsFacilityState, ISINSCOPE('Appt Time And Count'[FacilityState]),
+			        IsEnterprise, ISINSCOPE('Appt Time And Count'[Enterprise]),
+			        ISINSCOPE('Appt Time And Count'[firmname])
+			    )
+			VAR TotalImpact =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup,
+			            SUMX(
+			                VALUES('Appt Time And Count'[Firm_Group]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			            ),
+			        IsFirmRegion,
+			            SUMX(
+			                VALUES('Appt Time And Count'[firm_region]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			            ),
+			        IsFirmState,
+			            SUMX(
+			                VALUES('Appt Time And Count'[firm_state]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			            ),
+			        IsFacilityName,
+			            SUMX(
+			                VALUES('Appt Time And Count'[facilityname]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			            ),
+			        IsFacilityState,
+			            SUMX(
+			                VALUES('Appt Time And Count'[FacilityState]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			            ),
+			        IsEnterprise,
+			            SUMX(
+			                VALUES('Appt Time And Count'[Enterprise]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			            ),
+			        SUMX(
+			            VALUES('Appt Time And Count'[firmname]),
+			            VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			            VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			            RETURN CurrentShare * [Current Metric] - PriorShare * [Prior Metric]
+			        )
+			    )
+			RETURN IF(IsRowScope, RowImpact, TotalImpact)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: 3df2d8ce-8b21-4b3c-9f6b-26c1df07fd8e
+
+	measure 'Impact 2 - Rate Effect (pp)' =
+			VAR SelectedField = SELECTEDVALUE('Comparision Parameter'[Comparision Parameter Fields], "Appt Time And Count[firmname]")
+			VAR IsFirmGroup = CONTAINSSTRING(SelectedField, "[Firm_Group]")
+			VAR IsFirmRegion = CONTAINSSTRING(SelectedField, "[firm_region]")
+			VAR IsFirmState = CONTAINSSTRING(SelectedField, "[firm_state]")
+			VAR IsFirmName = CONTAINSSTRING(SelectedField, "[firmname]")
+			VAR IsFacilityName = CONTAINSSTRING(SelectedField, "[facilityname]")
+			VAR IsFacilityState = CONTAINSSTRING(SelectedField, "[FacilityState]")
+			VAR IsEnterprise = CONTAINSSTRING(SelectedField, "[Enterprise]")
+			VAR PriorDenom =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, CALCULATE([Prior Volume], ALL('Appt Time And Count'[Firm_Group])),
+			        IsFirmRegion, CALCULATE([Prior Volume], ALL('Appt Time And Count'[firm_region])),
+			        IsFirmState, CALCULATE([Prior Volume], ALL('Appt Time And Count'[firm_state])),
+			        IsFacilityName, CALCULATE([Prior Volume], ALL('Appt Time And Count'[facilityname])),
+			        IsFacilityState, CALCULATE([Prior Volume], ALL('Appt Time And Count'[FacilityState])),
+			        IsEnterprise, CALCULATE([Prior Volume], ALL('Appt Time And Count'[Enterprise])),
+			        CALCULATE([Prior Volume], ALL('Appt Time And Count'[firmname]))
+			    )
+			VAR RowImpact =
+			    VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			    RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			VAR IsRowScope =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, ISINSCOPE('Appt Time And Count'[Firm_Group]),
+			        IsFirmRegion, ISINSCOPE('Appt Time And Count'[firm_region]),
+			        IsFirmState, ISINSCOPE('Appt Time And Count'[firm_state]),
+			        IsFacilityName, ISINSCOPE('Appt Time And Count'[facilityname]),
+			        IsFacilityState, ISINSCOPE('Appt Time And Count'[FacilityState]),
+			        IsEnterprise, ISINSCOPE('Appt Time And Count'[Enterprise]),
+			        ISINSCOPE('Appt Time And Count'[firmname])
+			    )
+			VAR TotalImpact =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup,
+			            SUMX(
+			                VALUES('Appt Time And Count'[Firm_Group]),
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			            ),
+			        IsFirmRegion,
+			            SUMX(
+			                VALUES('Appt Time And Count'[firm_region]),
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			            ),
+			        IsFirmState,
+			            SUMX(
+			                VALUES('Appt Time And Count'[firm_state]),
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			            ),
+			        IsFacilityName,
+			            SUMX(
+			                VALUES('Appt Time And Count'[facilityname]),
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			            ),
+			        IsFacilityState,
+			            SUMX(
+			                VALUES('Appt Time And Count'[FacilityState]),
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			            ),
+			        IsEnterprise,
+			            SUMX(
+			                VALUES('Appt Time And Count'[Enterprise]),
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			            ),
+			        SUMX(
+			            VALUES('Appt Time And Count'[firmname]),
+			            VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			            RETURN PriorShare * ([Current Metric] - [Prior Metric])
+			        )
+			    )
+			RETURN IF(IsRowScope, RowImpact, TotalImpact)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: 8321da04-e182-45c8-9215-c005f34a8f17
+
+	measure 'Impact 3 - Mix Effect (pp)' =
+			VAR SelectedField = SELECTEDVALUE('Comparision Parameter'[Comparision Parameter Fields], "Appt Time And Count[firmname]")
+			VAR IsFirmGroup = CONTAINSSTRING(SelectedField, "[Firm_Group]")
+			VAR IsFirmRegion = CONTAINSSTRING(SelectedField, "[firm_region]")
+			VAR IsFirmState = CONTAINSSTRING(SelectedField, "[firm_state]")
+			VAR IsFirmName = CONTAINSSTRING(SelectedField, "[firmname]")
+			VAR IsFacilityName = CONTAINSSTRING(SelectedField, "[facilityname]")
+			VAR IsFacilityState = CONTAINSSTRING(SelectedField, "[FacilityState]")
+			VAR IsEnterprise = CONTAINSSTRING(SelectedField, "[Enterprise]")
+			VAR CurrentDenom =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, CALCULATE([Current Volume], ALL('Appt Time And Count'[Firm_Group])),
+			        IsFirmRegion, CALCULATE([Current Volume], ALL('Appt Time And Count'[firm_region])),
+			        IsFirmState, CALCULATE([Current Volume], ALL('Appt Time And Count'[firm_state])),
+			        IsFacilityName, CALCULATE([Current Volume], ALL('Appt Time And Count'[facilityname])),
+			        IsFacilityState, CALCULATE([Current Volume], ALL('Appt Time And Count'[FacilityState])),
+			        IsEnterprise, CALCULATE([Current Volume], ALL('Appt Time And Count'[Enterprise])),
+			        CALCULATE([Current Volume], ALL('Appt Time And Count'[firmname]))
+			    )
+			VAR PriorDenom =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, CALCULATE([Prior Volume], ALL('Appt Time And Count'[Firm_Group])),
+			        IsFirmRegion, CALCULATE([Prior Volume], ALL('Appt Time And Count'[firm_region])),
+			        IsFirmState, CALCULATE([Prior Volume], ALL('Appt Time And Count'[firm_state])),
+			        IsFacilityName, CALCULATE([Prior Volume], ALL('Appt Time And Count'[facilityname])),
+			        IsFacilityState, CALCULATE([Prior Volume], ALL('Appt Time And Count'[FacilityState])),
+			        IsEnterprise, CALCULATE([Prior Volume], ALL('Appt Time And Count'[Enterprise])),
+			        CALCULATE([Prior Volume], ALL('Appt Time And Count'[firmname]))
+			    )
+			VAR RowImpact =
+			    VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			    VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			    RETURN (CurrentShare - PriorShare) * [Current Metric]
+			VAR IsRowScope =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup, ISINSCOPE('Appt Time And Count'[Firm_Group]),
+			        IsFirmRegion, ISINSCOPE('Appt Time And Count'[firm_region]),
+			        IsFirmState, ISINSCOPE('Appt Time And Count'[firm_state]),
+			        IsFacilityName, ISINSCOPE('Appt Time And Count'[facilityname]),
+			        IsFacilityState, ISINSCOPE('Appt Time And Count'[FacilityState]),
+			        IsEnterprise, ISINSCOPE('Appt Time And Count'[Enterprise]),
+			        ISINSCOPE('Appt Time And Count'[firmname])
+			    )
+			VAR TotalImpact =
+			    SWITCH(
+			        TRUE(),
+			        IsFirmGroup,
+			            SUMX(
+			                VALUES('Appt Time And Count'[Firm_Group]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN (CurrentShare - PriorShare) * [Current Metric]
+			            ),
+			        IsFirmRegion,
+			            SUMX(
+			                VALUES('Appt Time And Count'[firm_region]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN (CurrentShare - PriorShare) * [Current Metric]
+			            ),
+			        IsFirmState,
+			            SUMX(
+			                VALUES('Appt Time And Count'[firm_state]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN (CurrentShare - PriorShare) * [Current Metric]
+			            ),
+			        IsFacilityName,
+			            SUMX(
+			                VALUES('Appt Time And Count'[facilityname]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN (CurrentShare - PriorShare) * [Current Metric]
+			            ),
+			        IsFacilityState,
+			            SUMX(
+			                VALUES('Appt Time And Count'[FacilityState]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN (CurrentShare - PriorShare) * [Current Metric]
+			            ),
+			        IsEnterprise,
+			            SUMX(
+			                VALUES('Appt Time And Count'[Enterprise]),
+			                VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			                VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			                RETURN (CurrentShare - PriorShare) * [Current Metric]
+			            ),
+			        SUMX(
+			            VALUES('Appt Time And Count'[firmname]),
+			            VAR CurrentShare = DIVIDE([Current Volume], CurrentDenom)
+			            VAR PriorShare = DIVIDE([Prior Volume], PriorDenom)
+			            RETURN (CurrentShare - PriorShare) * [Current Metric]
+			        )
+			    )
+			RETURN IF(IsRowScope, RowImpact, TotalImpact)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SLA comparison
+		lineageTag: 4a01d705-f6d4-4639-a03c-0f63d5d7d3cb
+
+	measure 'Funded 0-30 Days % Overall' = DIVIDE([Funded 0-30 Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: 926f5a63-4752-4e91-8f09-357322f01d89
+
+	measure 'Funded 30-60 Days % Overall' = DIVIDE([Funded 30-60 Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: d09a2279-cd90-499e-8926-c905636bcb1c
+
+	measure 'Funded 60-90 Days % Overall' = DIVIDE([Funded 60-90 Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: c222de5e-59f2-4644-bf1d-b73da0f83db9
+
+	measure 'Funded 90+ Days % Overall' = DIVIDE([Funded 90+ Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Funded measures
+		lineageTag: 7faf94a6-c2bb-4f36-b094-601a9f6c3ce5
+
+	measure '% Scheduled in 0-7 Days Trend' =
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Scheduled in 0-7 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 8bfe32ea-c21f-43c6-9ddf-a35be3c6f130
+
+	measure '% Scheduled in 0-10 Days Trend' =
+			VAR Mode = [Trend Mode Selected]
+			VAR AxisDateTime = MAX('Appt Time And Count'[datecreated])
+			VAR AxisDate = DATE(YEAR(AxisDateTime), MONTH(AxisDateTime), DAY(AxisDateTime))
+			VAR IsWeekStart = WEEKDAY(AxisDate, 2) = 1
+			VAR IsMonthEnd = AxisDate = EOMONTH(AxisDate, 0)
+			VAR IsPoint = IF(Mode = "WoW", IsWeekStart, IsMonthEnd)
+			RETURN
+			    IF(IsPoint, [% Scheduled in 0-10 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 8eeaa7ad-5400-4f1c-9d91-4182e3a85dc2
+
+	measure 'Trend Toggle - Scheduled %' =
+			VAR ShowAll = NOT ISFILTERED('Scheduled Trend Series Selector'[Series])
+			VAR ShowThis = "Scheduled %" IN VALUES('Scheduled Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Successfully Scheduled Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 5b1295a6-1cc2-4fe3-babd-9db442b9f258
+
+	measure 'Trend Toggle - Scheduled in 3D %' =
+			VAR ShowAll = NOT ISFILTERED('Scheduled Trend Series Selector'[Series])
+			VAR ShowThis = "Scheduled in 3D %" IN VALUES('Scheduled Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Scheduled in 0-3 Days Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: e0866f9e-f012-4c1b-a6c2-b0e9bd3ea3bf
+
+	measure 'Trend Toggle - Scheduled in 7D %' =
+			VAR ShowAll = NOT ISFILTERED('Scheduled Trend Series Selector'[Series])
+			VAR ShowThis = "Scheduled in 7D %" IN VALUES('Scheduled Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Scheduled in 0-7 Days Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: f1a9522f-b4c7-4d14-a1fd-99bc8037cd64
+
+	measure 'Trend Toggle - Scheduled in 10D %' =
+			VAR ShowAll = NOT ISFILTERED('Scheduled Trend Series Selector'[Series])
+			VAR ShowThis = "Scheduled in 10D %" IN VALUES('Scheduled Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Scheduled in 0-10 Days Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 6cdb6c79-a0da-4b22-9fd8-e8dc57c0f5e5
+
+	measure 'Trend Toggle - Funded %' =
+			VAR ShowAll = NOT ISFILTERED('Funded Trend Series Selector'[Series])
+			VAR ShowThis = "Funded %" IN VALUES('Funded Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Successfully Funded Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 7f55d464-f2b0-4dd5-bd15-c9f74f96cdf3
+
+	measure 'Trend Toggle - Funded in 30D %' =
+			VAR ShowAll = NOT ISFILTERED('Funded Trend Series Selector'[Series])
+			VAR ShowThis = "Funded in 30D %" IN VALUES('Funded Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Funded in 30 Days Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 31ed46fb-2bdd-437d-a320-85ec6c898cf2
+
+	measure 'Trend Toggle - Funded in 60D %' =
+			VAR ShowAll = NOT ISFILTERED('Funded Trend Series Selector'[Series])
+			VAR ShowThis = "Funded in 60D %" IN VALUES('Funded Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Funded in 60 Days Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: 617f12ce-b8cf-4320-b505-cbb04a0cca6d
+
+	measure 'Trend Toggle - Funded in 90D %' =
+			VAR ShowAll = NOT ISFILTERED('Funded Trend Series Selector'[Series])
+			VAR ShowThis = "Funded in 90D %" IN VALUES('Funded Trend Series Selector'[Series])
+			RETURN IF(ShowAll || ShowThis, [% Funded in 90 Days Trend])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Trend measures
+		lineageTag: e30ed748-f6ad-4f02-b046-db5219823146
+
+	measure '% Scheduled in 0-7 Days' = [% Scheduled in 0-3 Days] + [% Scheduled in 3-7 Days]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: e74262a8-c8d0-4529-bca2-2a01e2ea3f94
+
+	measure '% Scheduled in 0-10 Days' = [% Scheduled in 0-7 Days] + [% Scheduled in 7-10 Days]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: c7aeead0-8bc8-4410-b266-d5fd8199c6b8
+
+	measure 'Scheduled 0-3 Days % Overall' = DIVIDE([Scheduled 0-3 Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: 14ad8d3d-c889-4ccd-b6fd-5f8a892fb4bc
+
+	measure 'Scheduled 3-7 Days % Overall' = DIVIDE([Scheduled 3-7 Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: 711bfcf3-4491-4745-8d8c-80f798847d56
+
+	measure 'Scheduled 7-10 Days % Overall' = DIVIDE([Scheduled 7-10 Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: 9e909f7c-fb7f-4ac2-bc6d-d7421244d428
+
+	measure 'Scheduled 10+ Days % Overall' = DIVIDE([Scheduled 10+ Days], [Total IDs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Schedule measures
+		lineageTag: 12f0ac56-bc69-4670-ae01-ac43bf8f4812
+
+	measure 'Flag Direction (by SLA Metric)' =
+			VAR MetricName = SELECTEDVALUE('SLA Metric Selector'[Metric], "Scheduled %")
+			RETURN IF(MetricName = "Canceled %", -1, 1)
+		formatString: 0;-0;0
+		displayFolder: SLA comparison\Flags
+		lineageTag: 6f8812ba-ea6b-4a5b-8bc4-e66a286c28f0
+
+	measure 'Flag - Metric Diff Good' =
+			VAR v = [Metric Diff (Current-Prior)]
+			VAR dir = [Flag Direction (by SLA Metric)]
+			RETURN IF(dir * v >= 0, 1, 0)
+		formatString: 0;-0;0
+		displayFolder: SLA comparison\Flags
+		lineageTag: 0ddd7805-641b-4b2a-8cf7-1dd7e73af2d7
+
+	measure 'Flag - Impact 1 Good' =
+			VAR v = [Impact 1 - Total Contribution (pp)]
+			VAR dir = [Flag Direction (by SLA Metric)]
+			RETURN IF(dir * v >= 0, 1, 0)
+		formatString: 0;-0;0
+		displayFolder: SLA comparison\Flags
+		lineageTag: 30890d45-edde-41a4-95f1-63526f15bca8
+
+	measure 'Flag - Impact 2 Good' =
+			VAR v = [Impact 2 - Rate Effect (pp)]
+			VAR dir = [Flag Direction (by SLA Metric)]
+			RETURN IF(dir * v >= 0, 1, 0)
+		formatString: 0;-0;0
+		displayFolder: SLA comparison\Flags
+		lineageTag: 8a0ecf04-c0d5-4855-b2cc-f5133653df34
+
+	measure 'Flag - Impact 3 Good' =
+			VAR v = [Impact 3 - Mix Effect (pp)]
+			VAR dir = [Flag Direction (by SLA Metric)]
+			RETURN IF(dir * v >= 0, 1, 0)
+		formatString: 0;-0;0
+		displayFolder: SLA comparison\Flags
+		lineageTag: 8f15b3f8-6f9f-4f89-9f16-fa160196f8d0
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 127115f6-78f1-4e71-a14e-de0f71df4911
+		summarizeBy: none
+		sourceColumn: id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 85da40ce-93d6-4b39-8c8a-4500a80fa8e4
+		summarizeBy: none
+		sourceColumn: region
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_time_to_schedule
+		dataType: double
+		lineageTag: d5d9a013-78f0-4be1-b5a7-05bb9a77f893
+		summarizeBy: sum
+		sourceColumn: total_time_to_schedule
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Counter = 1
+		formatString: 0
+		lineageTag: dd444088-2c6a-4187-ac05-e7d6fba112cf
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheduled
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bef74ab-e108-4c1b-bf19-1b010e724862
+		summarizeBy: sum
+		sourceColumn: Scheduled
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: d3df38c1-113f-44c8-91b6-1ffe5cc11997
+		summarizeBy: none
+		sourceColumn: status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column request_week
+		dataType: dateTime
+		formatString: MM/DD/YY
+		lineageTag: 3a22f7b8-8120-44fe-becf-2267ba470dbb
+		summarizeBy: none
+		sourceColumn: request_week
+
+		variation Variation
+			isDefault
+			relationship: 5bd7e6fd-cf08-4898-9059-42185176d3d5
+			defaultHierarchy: LocalDateTable_0bdcfb4d-4a96-4715-8e38-c19a0a553031.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column facilityname
+		dataType: string
+		lineageTag: 8208ef64-6158-44cd-87c1-7e6df882155b
+		summarizeBy: none
+		sourceColumn: facilityname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ScheduledBy
+		dataType: string
+		lineageTag: 22ccaa71-1e71-4720-95e1-4909f384f48e
+		summarizeBy: none
+		sourceColumn: ScheduledBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column recent_filter
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d1fde60-177a-450e-baca-f74604d8d9e3
+		summarizeBy: sum
+		sourceColumn: recent_filter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Schedule Week' = ```
+			
+			    [first_schedule_Date] - WEEKDAY([first_schedule_Date], 1) + 1
+			```
+		formatString: General Date
+		lineageTag: 5247e838-a2f0-4247-ae36-3ddc53f833f6
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 5b7ee5cf-bffb-4619-a4ff-040dbf76c2cd
+			defaultHierarchy: LocalDateTable_5c8c00b3-f64a-419a-916e-8904910ffae7.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column appt_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a948c606-d531-488b-a926-5e4b11b85ca5
+		summarizeBy: none
+		sourceColumn: appt_date
+
+		variation Variation
+			isDefault
+			relationship: f634335b-0ec7-420f-955b-19c6f2920053
+			defaultHierarchy: LocalDateTable_9aa972c5-ec4d-4e44-9b8c-6979f6edb54d.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Appt Week' = ```
+			
+			    [appt_date] - WEEKDAY([appt_date], 1) + 1
+			```
+		formatString: General Date
+		lineageTag: 17edd629-1987-4273-b3fb-e35bc721b4be
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 23ee0175-52bd-4697-9c90-aa43e00a3664
+			defaultHierarchy: LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column seen
+		dataType: int64
+		formatString: 0
+		lineageTag: 11cfbe32-b42f-4eae-859e-f066a99fc71c
+		summarizeBy: sum
+		sourceColumn: seen
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Enterprise
+		dataType: string
+		lineageTag: 5f7754ae-5d0b-4eba-ab54-1c6c1f9d416f
+		summarizeBy: none
+		sourceColumn: Enterprise
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column firmname
+		dataType: string
+		lineageTag: 095b29fb-4cce-4b1c-811a-63650c881a8d
+		summarizeBy: none
+		sourceColumn: firmname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Selectpt
+		dataType: string
+		lineageTag: 117029d0-3e7e-4917-ae17-055570e52315
+		summarizeBy: none
+		sourceColumn: Selectpt
+
+		annotation SummarizationSetBy = Automatic
+
+	column FacilityState
+		dataType: string
+		lineageTag: 3a30e8f9-a6bb-483f-babf-7da9d5c84ffc
+		summarizeBy: none
+		sourceColumn: FacilityState
+
+		annotation SummarizationSetBy = Automatic
+
+	column internal_user
+		dataType: string
+		lineageTag: 076e95aa-c220-4d46-9ea3-41ee197861c6
+		summarizeBy: none
+		sourceColumn: internal_user
+
+		annotation SummarizationSetBy = Automatic
+
+	column datecreated
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3da3a59b-777e-42e5-8894-cffcd93c42fc
+		summarizeBy: none
+		sourceColumn: datecreated
+
+		variation Variation
+			isDefault
+			relationship: 5baa2402-daa6-4a41-b720-a0a256faae13
+			defaultHierarchy: LocalDateTable_1e45d379-24b2-4a6b-b81f-88a138cb61f8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_schedule_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2e5ac766-32b1-4ea7-b288-2d1991cbf2d7
+		summarizeBy: none
+		sourceColumn: first_schedule_date
+
+		variation Variation
+			isDefault
+			relationship: 204e1296-c276-470e-a528-8a3adae1c95b
+			defaultHierarchy: LocalDateTable_e12cdbbe-ffb2-404c-a793-17fda3631d0b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column request_day
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d7a21dfa-4a55-4a60-b011-96451d7b9990
+		summarizeBy: none
+		sourceColumn: request_day
+
+		variation Variation
+			isDefault
+			relationship: 51250178-7ecb-48d8-b73d-6e1ce14d80f8
+			defaultHierarchy: LocalDateTable_40cd4a2a-670d-4ee9-918f-1d53d9d00060.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column appt_day
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 515e198d-beb0-4f0e-9817-6adbde5726de
+		summarizeBy: none
+		sourceColumn: appt_day
+
+		variation Variation
+			isDefault
+			relationship: 9eabae49-db74-4870-a317-f6af2a830725
+			defaultHierarchy: LocalDateTable_55308e4b-db27-4e28-b6da-de0a061316d4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_schedule_Day
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2a714faa-3806-4fe9-a743-96dfa9d7f332
+		summarizeBy: none
+		sourceColumn: first_schedule_Day
+
+		variation Variation
+			isDefault
+			relationship: 28107c62-07c3-4f72-8496-04190b729506
+			defaultHierarchy: LocalDateTable_9bad09a2-7031-4a72-9899-094cc00baaea.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column sched1month
+		dataType: double
+		lineageTag: 53e30c2e-0a9e-4c96-99c5-f7c8ce550252
+		summarizeBy: sum
+		sourceColumn: sched1month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sched3month
+		dataType: double
+		lineageTag: 79b06d0b-1f4d-44b7-a85b-6bca6659fd87
+		summarizeBy: sum
+		sourceColumn: sched3month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sched6month
+		dataType: double
+		lineageTag: 3dad75b1-ad22-4bf7-8aac-f96f29a645b8
+		summarizeBy: sum
+		sourceColumn: sched6month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sched12month
+		dataType: double
+		lineageTag: 19191455-4f2f-429c-a79e-3dbeb7bdd26b
+		summarizeBy: sum
+		sourceColumn: sched12month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column first_schedule_week
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0ba4d4ef-9443-443f-a592-cc6e1d5fbe96
+		summarizeBy: none
+		sourceColumn: first_schedule_week
+
+		variation Variation
+			isDefault
+			relationship: d0516b30-93f3-44fc-af3c-24dde808f584
+			defaultHierarchy: LocalDateTable_8bcbd3d4-16d5-4333-a5d5-658823d6ada4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column appt_week
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e12e14df-d51a-4ef2-bc1d-a6ad51e820ca
+		summarizeBy: none
+		sourceColumn: appt_week
+
+		variation Variation
+			isDefault
+			relationship: 9819596f-3d31-43ce-8dcc-443ef9d91517
+			defaultHierarchy: LocalDateTable_d8d60124-5ce7-4648-8885-571fef9516a0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column request_month
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 456c0fda-6655-4e2d-811f-a853560056f9
+		summarizeBy: none
+		sourceColumn: request_month
+
+		variation Variation
+			isDefault
+			relationship: e5cba507-0c54-4189-b1df-3b09cf6832b5
+			defaultHierarchy: LocalDateTable_08a7a7e4-80fb-4373-9152-7c04185de5c8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column appt_month
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 604a8b05-5768-4eac-8d93-e9fb470af1f6
+		summarizeBy: none
+		sourceColumn: appt_month
+
+		variation Variation
+			isDefault
+			relationship: 6f524f78-d101-4597-a928-03d69914f288
+			defaultHierarchy: LocalDateTable_d7c03d0f-5cf4-4313-958a-711d9bae1122.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_schedule_month
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cf5d711b-d22a-4449-b90f-46d2986b184c
+		summarizeBy: none
+		sourceColumn: first_schedule_month
+
+		variation Variation
+			isDefault
+			relationship: 59c812a3-178e-4226-9ac6-43fd6bfe552b
+			defaultHierarchy: LocalDateTable_1925d46d-d8af-4a46-9b8c-230e72de8781.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column converted
+		dataType: int64
+		formatString: 0
+		lineageTag: de5ffca5-a241-459f-b188-ecefec5b9bf1
+		summarizeBy: sum
+		sourceColumn: converted
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv1month
+		dataType: int64
+		formatString: 0
+		lineageTag: f804c5ac-d897-4e96-b842-20af697051d8
+		summarizeBy: sum
+		sourceColumn: conv1month
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv3month
+		dataType: int64
+		formatString: 0
+		lineageTag: 60ae07b1-319a-4bc5-8c46-d3f16d43dff1
+		summarizeBy: sum
+		sourceColumn: conv3month
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv6month
+		dataType: int64
+		formatString: 0
+		lineageTag: f8e22644-af88-4077-bcad-1c90f3e16617
+		summarizeBy: sum
+		sourceColumn: conv6month
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv12month
+		dataType: int64
+		formatString: 0
+		lineageTag: cec89fd8-a02c-4af3-9fcf-12ce1b6be641
+		summarizeBy: sum
+		sourceColumn: conv12month
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv1month_Denominator
+		dataType: int64
+		formatString: 0
+		lineageTag: 52e4d3c8-45dd-4618-b154-caca7f6410df
+		summarizeBy: sum
+		sourceColumn: conv1month_Denominator
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv3month_Denominator
+		dataType: int64
+		formatString: 0
+		lineageTag: 3457120a-6868-44d1-bbe2-7b340f07e9e6
+		summarizeBy: sum
+		sourceColumn: conv3month_Denominator
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv6month_Denominator
+		dataType: int64
+		formatString: 0
+		lineageTag: cc550ec7-b61d-4f2d-b0dc-3b30cd3ced80
+		summarizeBy: sum
+		sourceColumn: conv6month_Denominator
+
+		annotation SummarizationSetBy = Automatic
+
+	column conv12month_Denominator
+		dataType: int64
+		formatString: 0
+		lineageTag: 289b2e3b-adbc-4fc1-8ad9-6702420f86d4
+		summarizeBy: sum
+		sourceColumn: conv12month_Denominator
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_time_to_seen
+		dataType: double
+		lineageTag: 4a35178d-339e-470b-9364-4c1a0738018d
+		summarizeBy: sum
+		sourceColumn: total_time_to_seen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Appointment Type'
+		dataType: string
+		lineageTag: 58eadda4-5f87-4692-9da3-251d78c89daa
+		summarizeBy: none
+		sourceColumn: Appointment Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column FacilityType
+		dataType: string
+		lineageTag: 196fd5dc-ad05-4b87-b9e8-853c09344c85
+		summarizeBy: none
+		sourceColumn: FacilityType
+
+		annotation SummarizationSetBy = Automatic
+
+	column lawFirmName
+		dataType: string
+		lineageTag: 6492e6a8-1f49-4f6b-acbf-620f6a290e79
+		summarizeBy: none
+		sourceColumn: lawFirmName
+
+		annotation SummarizationSetBy = Automatic
+
+	column rvp
+		dataType: string
+		lineageTag: 60a798da-3a5c-421b-a728-24776b648d7a
+		summarizeBy: none
+		sourceColumn: rvp
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_origination_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 4736315d-3171-4639-a87c-b84bc3943929
+		summarizeBy: sum
+		sourceColumn: facility_origination_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column firm_origination_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 2048cd23-d0b1-427e-b284-0e8c8d1d7e5c
+		summarizeBy: sum
+		sourceColumn: firm_origination_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_origination_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b697994-df13-4cb7-ab59-2a9fbb67d6da
+		summarizeBy: sum
+		sourceColumn: state_origination_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_request_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f0126ec-8276-4ab3-a2ce-6d1be0203978
+		summarizeBy: sum
+		sourceColumn: facility_request_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column firm_request_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: e7ddb624-3cfa-4aa6-96b3-97178c75a63d
+		summarizeBy: sum
+		sourceColumn: firm_request_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_request_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 066352fa-5a3a-47c6-9f80-71d7d25f6b00
+		summarizeBy: sum
+		sourceColumn: state_request_rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column Count
+		dataType: int64
+		formatString: 0
+		lineageTag: ef28ff36-28a5-43b2-ae59-41de4af572c0
+		summarizeBy: sum
+		sourceColumn: Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_time_to_acct
+		dataType: double
+		lineageTag: ea416c82-aec6-4350-8f73-650ae99c43be
+		summarizeBy: sum
+		sourceColumn: total_time_to_acct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_time_to_bill
+		dataType: double
+		lineageTag: 788ba26d-6ddc-4d6c-8101-78a0820ae553
+		summarizeBy: sum
+		sourceColumn: total_time_to_bill
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'appoitnment service'
+		dataType: string
+		lineageTag: a1154cb6-15b2-411a-ba1b-bffbcb15b9b1
+		summarizeBy: none
+		sourceColumn: appoitnment service
+
+		annotation SummarizationSetBy = Automatic
+
+	column firm_state
+		dataType: string
+		lineageTag: ab852f6a-e6db-49ae-9eb9-6eade5e05654
+		summarizeBy: none
+		sourceColumn: firm_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column high_vol_firm
+		dataType: int64
+		formatString: 0
+		lineageTag: 48e44b71-b66f-4689-9ab2-65895ef61d69
+		summarizeBy: sum
+		sourceColumn: high_vol_firm
+
+		annotation SummarizationSetBy = Automatic
+
+	column high_vol_fac
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b781b00-7e15-4ed4-a71a-3e45bbbdab40
+		summarizeBy: sum
+		sourceColumn: high_vol_fac
+
+		annotation SummarizationSetBy = Automatic
+
+	column high_vol_enterprise
+		dataType: int64
+		formatString: 0
+		lineageTag: b042ade5-c625-49aa-b8f3-845f70a32c83
+		summarizeBy: sum
+		sourceColumn: high_vol_enterprise
+
+		annotation SummarizationSetBy = Automatic
+
+	column fac_rvp
+		dataType: string
+		lineageTag: 0ad6d5af-0ee7-46de-ac13-87ccd337ccd7
+		summarizeBy: none
+		sourceColumn: fac_rvp
+
+		annotation SummarizationSetBy = Automatic
+
+	column firm_region
+		dataType: string
+		lineageTag: cc861b43-a1ac-4075-ba65-1576e4ad5e05
+		summarizeBy: none
+		sourceColumn: firm_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column fac_region
+		dataType: string
+		lineageTag: dc28368d-1e9b-4826-b45c-c08ba1b493e3
+		summarizeBy: none
+		sourceColumn: fac_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Firm_Group
+		dataType: string
+		lineageTag: 6dfc6139-6d64-4777-b43a-5edd7b18fda9
+		summarizeBy: none
+		sourceColumn: Firm_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Facility_Groups
+		dataType: string
+		lineageTag: a9f7583e-5599-4bf7-b28c-b6c993b81e35
+		summarizeBy: none
+		sourceColumn: Facility_Groups
+
+		annotation SummarizationSetBy = Automatic
+
+	column Non-Standard/Do_Not_Schedule_Groups
+		dataType: string
+		lineageTag: de823cd5-4170-405a-b574-46d7f84504e3
+		summarizeBy: none
+		sourceColumn: Non-Standard/Do_Not_Schedule_Groups
+
+		annotation SummarizationSetBy = Automatic
+
+	column funded
+		dataType: int64
+		formatString: 0
+		lineageTag: b8d101fe-1dc9-4c77-af11-11be01be9985
+		summarizeBy: sum
+		sourceColumn: funded
+
+		annotation SummarizationSetBy = Automatic
+
+	column fundeddate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 763ab58b-0ee7-458c-9a35-fa7bfe510d57
+		summarizeBy: none
+		sourceColumn: fundeddate
+
+		variation Variation
+			isDefault
+			relationship: d9f23b8c-837f-42b3-accf-19efda9017da
+			defaultHierarchy: LocalDateTable_d88c9140-d2f0-40e3-8931-73e8af3b062b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column funded_Day
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5702b6c4-c200-40d6-92c2-70e5ed216ee1
+		summarizeBy: none
+		sourceColumn: funded_Day
+
+		variation Variation
+			isDefault
+			relationship: 28288d18-d40e-4e21-8fcc-214a7184d75f
+			defaultHierarchy: LocalDateTable_1e528369-5668-4735-a018-452278a1b52a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column funded_week
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 61874a35-cbd5-4ba7-b95d-7734e6881c16
+		summarizeBy: none
+		sourceColumn: funded_week
+
+		variation Variation
+			isDefault
+			relationship: 2eae6ac5-f92a-4936-8328-74f04bfc1b9c
+			defaultHierarchy: LocalDateTable_82e0fe72-7980-4a4a-bdc9-e02b32cb74cf.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_funded_month
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e995f00e-6909-4037-bef8-5861d72fb80d
+		summarizeBy: none
+		sourceColumn: first_funded_month
+
+		variation Variation
+			isDefault
+			relationship: 365b168b-1aa9-42cc-8208-b30d432be567
+			defaultHierarchy: LocalDateTable_3bc2f87c-68a6-4718-97a4-1c82bada6d12.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column canceled
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ad13379-70f5-497e-b7b5-ac69e7f7b6ac
+		summarizeBy: sum
+		sourceColumn: canceled
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_canceled
+		dataType: int64
+		formatString: 0
+		lineageTag: 76bf7c01-22f0-46a6-82b2-92a0d4a48d35
+		summarizeBy: sum
+		sourceColumn: scheduled_canceled
+
+		annotation SummarizationSetBy = Automatic
+
+	column canceled_status
+		dataType: int64
+		formatString: 0
+		lineageTag: 6208a807-7ce6-42bc-8b2f-f4b00980755e
+		summarizeBy: sum
+		sourceColumn: canceled_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column canceled_by_pt
+		dataType: int64
+		formatString: 0
+		lineageTag: 91cf3bb6-5be2-4508-b775-6127b73474f6
+		summarizeBy: sum
+		sourceColumn: canceled_by_pt
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_visit
+		dataType: int64
+		formatString: 0
+		lineageTag: 0aaa71ae-9fd6-4079-83f5-4985f1e06fbc
+		summarizeBy: sum
+		sourceColumn: first_visit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'scheduling regions'
+		dataType: string
+		lineageTag: 2ab513b0-d016-40b0-b9e3-5c150e283398
+		summarizeBy: none
+		sourceColumn: scheduling regions
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_status
+		dataType: string
+		lineageTag: 9b464881-32fc-4d0a-bcb6-359b8f34bca6
+		summarizeBy: none
+		sourceColumn: current_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canceled_username
+		dataType: string
+		lineageTag: 9ab31e27-5d2d-4dd8-85ed-e5cdc2e55fd6
+		summarizeBy: none
+		sourceColumn: Canceled_username
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canceled_usertype
+		dataType: string
+		lineageTag: 23c53bab-cfe6-41c0-9e1d-01c88e792b6d
+		summarizeBy: none
+		sourceColumn: Canceled_usertype
+
+		annotation SummarizationSetBy = Automatic
+
+	column success_result
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f6ed854-2c89-42cd-a82e-6c99bdd182c6
+		summarizeBy: sum
+		sourceColumn: success_result
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_coordinator
+		dataType: string
+		lineageTag: c7ceb1d6-929f-48b0-bd76-d198996c9369
+		summarizeBy: none
+		sourceColumn: case_coordinator
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_user
+		dataType: string
+		lineageTag: 293c9595-9723-434f-a8df-96162115315e
+		summarizeBy: none
+		sourceColumn: assigned_user
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Enterprise Hierarchy'
+		lineageTag: cb671087-f5e1-472f-b900-20ab10df21d7
+
+		level Enterprise
+			lineageTag: 03d703f4-22f5-460f-b993-1e6f7a7387b7
+			column: Enterprise
+
+		level facilityname
+			lineageTag: 267a4b5a-7651-4ebd-8a0c-cacea21b58e4
+			column: facilityname
+
+	hierarchy 'fac_region Hierarchy'
+		lineageTag: 7aa18cd1-5aaa-4847-ad8c-6fd391684586
+
+		level fac_region
+			lineageTag: db2d5afb-13b2-4871-98f4-95ad180ac953
+			column: fac_region
+
+		level FacilityState
+			lineageTag: 12ca960e-89cb-4b9c-bb3d-ec9dfec4e948
+			column: FacilityState
+
+	partition 'Appt Time And Count-ec3b9fc5-c491-4a2b-bd71-199b3abeefe7' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("medprdsql02.canyonmedicalbilling.com", "financemetrics", [Query="DECLARE @startdate AS date#(lf)SET @startdate = '2022-01-01'#(lf)#(lf)/* Scheduling analysis  */#(lf)#(lf)#(lf)IF OBJECT_ID('tempdb..#base') IS NOT NULL DROP TABLE #base#(lf)IF OBJECT_ID('tempdb..#firstsched') IS NOT NULL DROP TABLE #firstsched#(lf)IF OBJECT_ID('tempdb..#firstschedbase') IS NOT NULL DROP TABLE #firstschedbase#(lf)IF OBJECT_ID('tempdb..#requests') IS NOT NULL DROP TABLE #requests#(lf)IF OBJECT_ID('tempdb..#facorigination') IS NOT NULL DROP TABLE #facorigination#(lf)IF OBJECT_ID('tempdb..#firmorigination') IS NOT NULL DROP TABLE #firmorigination#(lf)IF OBJECT_ID('tempdb..#stateorigination') IS NOT NULL DROP TABLE #stateorigination#(lf)IF OBJECT_ID('tempdb..#reqbyfac') IS NOT NULL DROP TABLE #reqbyfac#(lf)IF OBJECT_ID('tempdb..#reqbyfirm') IS NOT NULL DROP TABLE #reqbyfirm#(lf)IF OBJECT_ID('tempdb..#reqbystate') IS NOT NULL DROP TABLE #reqbystate#(lf)#(lf)#(lf)select#(lf)distinct a.SourceId,#(lf)(select min(b.createddate) as scheduled from MoveDocsV4.dbo.AuditLogs b where module = 'Appointment Request' and newvalue in ('Appointment Scheduled','Patient Seen')#(lf)and a.sourceid = b.sourceid) as date_scheduled#(lf)into #requests#(lf)from MoveDocsV4.dbo.AuditLogs a#(lf)where module = 'Appointment Request'#(lf)and [action] = 'New Appointment Request'#(lf)#(lf)SELECT #(lf)    fs.sourceid, #(lf)    fs.first_schedule_date,#(lf)    (SELECT TOP 1 al.createdby #(lf)     FROM MoveDocsV4.dbo.AuditLogs al#(lf)     WHERE al.sourceid = fs.sourceid #(lf)       AND al.newvalue IN ('Appointment Scheduled', 'No Show', 'Reschedule', 'Reschedule Needed', 'Patient seen')#(lf)     ORDER BY al.createddate ASC) AS createdby#(lf)INTO #firstschedbase#(lf)FROM #(lf)    (SELECT #(lf)         sourceid, #(lf)         MIN(createddate) AS first_schedule_date#(lf)     FROM MoveDocsV4.dbo.AuditLogs#(lf)     WHERE newvalue IN ('Appointment Scheduled', 'No Show', 'Reschedule', 'Reschedule Needed', 'Patient seen')#(lf)     GROUP BY sourceid) fs#(lf)#(lf)Drop table if exists #firstsched#(lf)select a.*, #(lf)case when anu.usertype is null then 'External Undefined' #(lf)#(tab) when a.createdby not like '%@movedocs.com' and a.createdby not like '%@medportbilling.com' and a.createdby not like '%@lienservicinggroup.com'#(lf)#(tab)and a.createdby not like '%@medport.com' and a.createdby not like '%@canyonmedicalbilling.com' and a.createdby not like '%@trimed-billing.com'#(lf)#(tab)and a.createdby not like 'ssomb%' and a.createdby not like 'sssomb%' and a.createdby not like '%@atticusbilling.com%' and a.createdby not like '%@keyhealth.net%' #(lf)#(tab)and a.createdby not like '%@thetriosolution%' and a.createdby not like '%@syndeocare.com%' and a.createdby not like '%@oasisfinancial.com%' and a.createdby not like '%@librasolutionsgroup%' #(lf)#(tab)then usertype else 'Internal' end as 'ScheduledBy',#(lf)case when anu.usertype is null then 'External Undefined' #(lf)#(tab) when a.createdby not like '%@movedocs.com' and a.createdby not like '%@medportbilling.com' and a.createdby not like '%@lienservicinggroup.com'#(lf)#(tab)and a.createdby not like '%@medport.com' and a.createdby not like '%@canyonmedicalbilling.com' and a.createdby not like '%@trimed-billing.com'#(lf)#(tab)and a.createdby not like 'ssomb%' and a.createdby not like 'sssomb%' and a.createdby not like '%@atticusbilling.com%' and a.createdby not like '%@keyhealth.net%' #(lf)#(tab)and a.createdby not like '%@thetriosolution%' and a.createdby not like '%@syndeocare.com%' and a.createdby not like '%@oasisfinancial.com%' and a.createdby not like '%@librasolutionsgroup%' #(lf)#(tab)then usertype else left(a.createdby, charindex('@', a.createdby)-1) end as internal_user#(lf)#(tab)into #firstsched#(lf)#(tab)from #firstschedbase a#(lf)#(tab)left join MoveDocsV4.dbo.AspNetUsers anu on anu.username = a.createdby#(lf)#(tab)--where anu.usertype = 'firm'#(lf)#(tab)order by first_schedule_date desc#(lf)#(lf)#(lf)Drop table if exists #proctype#(lf)SELECT distinct f.id,#(lf)f.Name,#(lf)f.facilitytype,#(lf)case when f.facilitytype = 'Physical Therapy' then 'PT'#(lf)when f.facilitytype = 'Imaging Facility' then 'Imaging'#(lf)when f.FacilityType = 'Initial' then 'Initial'#(lf)Else 'Specialties/Other' End as 'Procedure_Type',#(lf)coalesce(e.name, f.name) as 'Enterprise_Name'#(lf)into #proctype#(lf)FROM financemetrics.dbo.facilities f#(lf)left join FinanceMetrics.dbo.Enterprises e on f.EnterpriseID = e.Id#(lf)#(lf)Drop table if exists #untiedAcct#(lf)SELECT#(lf)a.id,#(lf)(select min(accountid) from FinanceMetrics.dbo._snapshot_CIMIAnalysisAnalytics s where s.DOB = d.DOB and s.DateOfLoss = c.DateOfLoss and s.ServiceDate = aa.ServiceDate#(lf)and s.ServiceDate > a.DateCreated and s.ServiceDate <= dateadd(day, 180, a.DateCreated) and aa.sourcesystemid = s.sourcesystemid and s.OriginalDueDate >= a.DateCreated#(lf)and ((a.firmid is null and fc.name = s.facility) or a.firmid = s.firmid) and OriginalDebt > 0 and a.DOSAccountId <> s.AccountId#(lf)and s.location not like '%grs%' and#(tab)#(lf)s.location not in ('IFA','IFI','OHF','OHC','TMC','TDC')#(tab)#(tab)#(tab)#(tab)#(lf)) as 'untied_account_id'#(lf)INTO #untiedAcct#(lf)FROM MoveDocsV4.dbo.AppointmentRequests a#(lf)left join FinanceMetrics.dbo.accounts aa on a.dosaccountid = aa.id#(lf)LEFT JOIN FinanceMetrics.dbo._snapshot_CIMIAnalysisAnalytics caa on caa.accountid = aa.id#(lf)left join financemetrics.dbo.cases c on aa.caseid= c.id#(lf)left join financemetrics.dbo.debtors d on c.debtorid = d.id and c.sourcesystemid= d.sourcesystemid#(lf)left join financemetrics.dbo.Facilities fc on aa.facilityid = fc.Id and aa.SourceSystemID = fc.SourceSystemID#(lf)where DOSAccountId is not null #(lf)Drop table if exists #firstvisit#(lf)SELECT #(lf)caseid, #(lf)min(id) as 'first_visit'#(lf)into #firstvisit#(lf)FROM MoveDocsV4.dbo.AppointmentRequests#(lf)where status not in ('began','canceled - location changed') and Removed = 0#(lf)group by caseid#(lf)#(lf)#(lf)Drop table if exists #base#(lf)select a.id, #(lf)a.status,#(lf)a.DateCreated, #(lf)first_schedule_date, #(lf)fs.internal_user,#(lf)a.appointmentdate as 'appt_Date',#(lf)case when a.Status in ('patient seen','Appointment Scheduled','Reschedule') or aa.OriginalDueDate is not null or s.OriginalDueDate is not null then 1 else 0 end as 'success_result',#(lf)r.date_scheduled as 'conversiondate',#(lf)case when a.Status like '%canceled%' then 1 else 0 end as 'canceled',#(lf)case when a.Status like '%canceled%' #(lf)#(tab) and anu.usertype is null then 'External Undefined' #(lf)#(tab) when a.Status like '%canceled%' and al.createdby not like '%@movedocs.com' and al.createdby not like '%@medportbilling.com' and al.createdby not like '%@lienservicinggroup.com'#(lf)#(tab)and al.createdby not like '%@medport.com' and al.createdby not like '%@canyonmedicalbilling.com' and al.createdby not like '%@trimed-billing.com'#(lf)#(tab)and al.createdby not like 'ssomb%' and al.createdby not like 'sssomb%' and al.createdby not like '%@atticusbilling.com%' and al.createdby not like '%@keyhealth.net%' #(lf)#(tab)and al.createdby not like '%@thetriosolution%' and al.createdby not like '%@mdunderwriting.com%' and al.createdby not like '%@syndeocare.com%' and al.createdby not like '%@oasisfinancial.com%' and al.createdby not like '%@librasolutionsgroup%' #(lf)#(tab)then anu.username else 'Internal' end as 'Canceled_username',#(lf)case when a.Status like '%canceled%' #(lf)#(tab) and anu.usertype is null then 'External Undefined' #(lf)#(tab) when a.Status like '%canceled%' and al.createdby not like '%@movedocs.com' and al.createdby not like '%@medportbilling.com' and al.createdby not like '%@lienservicinggroup.com'#(lf)#(tab)and al.createdby not like '%@medport.com' and al.createdby not like '%@canyonmedicalbilling.com' and al.createdby not like '%@trimed-billing.com'#(lf)#(tab)and al.createdby not like 'ssomb%' and al.createdby not like 'sssomb%' and al.createdby not like '%@atticusbilling.com%' and al.createdby not like '%@keyhealth.net%' #(lf)#(tab)and al.createdby not like '%@thetriosolution%' and al.createdby not like '%@mdunderwriting.com%' and al.createdby not like '%@syndeocare.com%' and al.createdby not like '%@oasisfinancial.com%' and al.createdby not like '%@librasolutionsgroup%' #(lf)#(tab)then anu.usertype else 'Internal' end as 'Canceled_usertype',#(lf)case when a.Status = 'Canceled' then 1 else 0 end as 'canceled_status',#(lf)case when a.Status = 'Canceled by Patient' then 1 else 0 end as 'canceled_by_pt',#(lf)case when a.Status like '%canceled%' and first_schedule_date is not null then 1 else 0 end as 'scheduled_canceled',#(lf)coalesce(aa.originalduedate,s.originalduedate) as 'fundeddate',#(lf)case when datediff(day,a.datecreated, first_schedule_date) >=90 then null #(lf)when datepart(dw, a.DateCreated) = 1 #(lf)then (datediff(HOUR,a.datecreated,first_schedule_date) * 1.0 / 24) - 1 - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,first_schedule_date)))#(lf)else (datediff(HOUR,a.datecreated,first_schedule_date) * 1.0 / 24) - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,first_schedule_date))) end as 'Schedule_Time',#(lf)case when datediff(day,a.datecreated, coalesce(AppointmentDate,aa.servicedate, s.servicedate)) >=90 then null #(lf)when datepart(dw, a.DateCreated) = 1 #(lf)then (datediff(HOUR,a.datecreated,coalesce(AppointmentDate,aa.servicedate, s.servicedate)) * 1.0 / 24) - 1 - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,coalesce(AppointmentDate,aa.servicedate, s.servicedate))))#(lf)else (datediff(HOUR,a.datecreated,coalesce(AppointmentDate,aa.servicedate, s.servicedate)) * 1.0 / 24) - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,coalesce(AppointmentDate,aa.servicedate, s.servicedate)))) end as 'Time_to_seen', #(lf)case when datepart(dw, a.DateCreated) = 1 and aa.datecreated > a.datecreated and a.status = 'Patient Seen'#(lf)then (datediff(HOUR,a.datecreated,aa.datecreated) * 1.0 / 24) - 1 - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,aa.datecreated)))#(lf)when aa.datecreated > a.datecreated and a.status = 'Patient Seen' #(lf)then (datediff(HOUR,a.datecreated,aa.datecreated) * 1.0 / 24) - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,aa.datecreated))) #(lf)else null end as 'Time_to_acct', #(lf)case when datepart(dw, a.DateCreated) = 1 and a.datecreated < coalesce(aa.originalduedate,s.originalduedate) and a.status = 'Patient Seen'#(lf)then (datediff(HOUR,a.datecreated,aa.originalduedate) * 1.0 / 24) - 1 - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,aa.originalduedate)))#(lf)when a.datecreated < coalesce(aa.originalduedate,s.originalduedate) and a.status = 'Patient Seen' #(lf)then (datediff(HOUR,a.datecreated,coalesce(aa.originalduedate,s.originalduedate)) * 1.0 / 24) - (2*DATEDIFF(wk, convert(date,a.datecreated),convert(date,coalesce(aa.originalduedate,s.originalduedate)))) #(lf)else null end as 'Time_to_bill', #(lf)case when team = 'CS' then 'Scheduling' else team end as 'Region',  #(lf)case when (a.facilityname like '%select PT%' or a.facilityname like '%select Physical Therapy%') then 'Select PT' else null end as 'SelectPT', #(lf)a.facilityname,#(lf)a.requiresservices,#(lf)cu.fullname as case_coordinator,#(lf)f.State, #(lf)a.FacilityState,#(lf)ScheduledBy,#(lf)--anu.username as canceled_by2,#(lf)--anu.usertype as canceled_usertype2,#(lf)case when a.Status in ('Appointment Scheduled','Patient Seen') then 'Successful'#(lf) when a.status in ('Canceled','Canceled by Patient','Declined by Provider') then 'Not Successful'#(lf) else 'Pending/Reworking' end as 'current_status',#(lf)pt.Procedure_Type,#(lf)pt.FacilityType,#(lf)f.firmname,#(lf)a.lawFirmName,#(lf)a.FacilityId,#(lf)a.FirmId,#(lf)case when fv.first_visit = a.Id then 1 else 0 end as 'first_visit',#(lf)coalesce(e.name,a.facilityname) as 'enterprise_name',#(lf)t.fullname as assigned_user#(lf)into #base#(lf)from movedocsv4.dbo.appointmentrequests a#(lf)LEFT JOIN c3.admin.Users t on t.Id = a.AssignedTo#(lf)left join #requests r on a.Id = r.SourceId#(lf)left join #firstsched fs on fs.sourceid = a.id#(lf)left join analytics.dbo.scheduling_ownership so on so.appt_id = a.id#(lf)left join financemetrics.dbo.accounts aa on aa.id = a.dosaccountid and aa.sourcesystemid = 2#(lf)left join c3.debtor.cases dc on dc.id = a.caseid#(lf)LEFT JOIN [C3].[admin].[Users] cu ON cu.Id = dc.CaseCoordinatorUserId#(lf)left join financemetrics.dbo.Facilities fc on aa.facilityid = fc.Id and aa.SourceSystemID = fc.SourceSystemID#(lf)left join financemetrics.dbo.enterprises e on fc.DefaultEnterpriseId = e.Id and aa.SourceSystemID = e.SourceSystemID#(lf)left join #proctype pt on pt.id = a.facilityid#(lf)left join [financemetrics].[dbo].[Firms] f on a.FirmId = f.id and aa.SourceSystemID = f.SourceSystemID#(lf)left join #untiedAcct ua on a.id = ua.Id#(lf)left join #firstvisit fv on a.caseid = fv.caseid#(lf)left join (SELECT * FROM FinanceMetrics.dbo._snapshot_CIMIAnalysisAnalytics where originaldebt > 0 #(lf)and isnull(location,'j')  not like '%grs%'#(tab)and#(tab)#(lf)isnull(location,'j') not in ('IFA','IFI','OHF','OHC','TMC','TDC')#(lf)) s on ua.untied_account_id = s.AccountId#(lf)left join (Select a.*#(lf)#(tab)#(tab)#(tab)from MoveDocsV4.dbo.AuditLogs a#(lf)#(tab)#(tab)#(tab)left join (Select sourceid, #(lf)#(tab)#(tab)#(tab)max(id) as latest_canceled_record #(lf)#(tab)#(tab)#(tab)from MoveDocsV4.dbo.AuditLogs #(lf)#(tab)#(tab)#(tab)where newvalue not like '%canceled - location%' #(lf)#(tab)#(tab)#(tab)and newvalue like '%Canceled%'#(lf)#(tab)#(tab)#(tab)group by SourceId) b on b.latest_canceled_record = a.id #(lf)#(tab)#(tab)#(tab)where b.latest_canceled_record is not null) al on al.SourceId = a.id#(lf)left join MoveDocsV4.dbo.AspNetUsers anu on anu.username = al.createdby #(lf)where a.status not like '%Began%' #(lf)and a.status not like '%canceled - location%'  #(lf)and a.Removed = 0#(lf)--and a.status like '%canceled%'#(lf)order by datecreated desc#(lf)#(lf)#(lf)#(lf)-----RANKINGS BASED ON ORIGINATION-------------#(lf)SELECT #(lf)f.id,#(lf)dense_rank() OVER (ORDER BY sum(cost) DESC) AS rank,#(lf)sum(cost) as 'Total_Origination'#(lf)into #facorigination#(lf)FROM [financemetrics].[dbo].[_snapshot_CIMIAnalysisAnalytics] c#(lf)LEFT JOIN financemetrics.dbo.Facilities f on c.Facility = f.Name#(lf)where --location <> 'Tri' and #(lf)originalduedate >= @startdate#(lf)group by f.id#(lf)#(lf)SELECT #(lf)firmid,#(lf)sum(cost) as 'Total_Origination',#(lf)dense_rank() OVER (ORDER BY sum(cost) DESC) AS rank#(lf)into #firmorigination#(lf)FROM [financemetrics].[dbo].[_snapshot_CIMIAnalysisAnalytics] #(lf)where --location <> 'Tri' and #(lf)originalduedate >= @startdate#(lf)group by FirmID#(lf)#(lf)SELECT FacilityState,#(lf)sum(cost) as 'Total_Origination',#(lf)dense_rank() OVER (ORDER BY sum(cost) DESC) AS rank#(lf)into #stateorigination#(lf)FROM [financemetrics].[dbo].[_snapshot_CIMIAnalysisAnalytics]#(lf)where isnull(location,'j')  not like '%grs%'#(tab)and#(tab)#(lf)isnull(location,'j') not in ('IFA','IFI','OHF','OHC','TMC','TDC') and#(lf)originalduedate >= @startdate#(lf)group by FacilityState#(lf)#(lf)#(lf)#(lf)------RANKINGS BASED ON REQUESTS------------#(lf)SELECT #(lf)FacilityId,#(lf)count(*) as 'Total_requests',#(lf)Dense_RANK () over (order by count(*) desc) as rank#(lf)into #reqbyfac#(lf)FROM [MoveDocsV4].[dbo].[AppointmentRequests]#(lf)where DateCreated >= @startdate#(lf)group by FacilityId#(lf)#(lf)Select #(lf)firmid,#(lf)DENSE_RANK () over (order by count(*) desc) as rank,#(lf)count(*) as 'Total_requests'#(lf)into #reqbyfirm#(lf)from [MoveDocsV4].[dbo].[AppointmentRequests]#(lf)where datecreated >= @startdate #(lf)group by FirmId#(lf)#(lf)Select FacilityState,#(lf)DENSE_RANK () over (order by count(*) desc) as rank,#(lf)count(*) as 'Total_requests'#(lf)into #reqbystate#(lf)from [MoveDocsV4].[dbo].[AppointmentRequests]#(lf)where datecreated >= @startdate #(lf)group by FacilityState#(lf)#(lf)#(lf)#(lf)select #(lf)distinct#(lf)a.id, #(lf)a.status,#(lf)a.facilityname,#(lf)Selectpt,#(lf)a.FacilityState,#(lf)ScheduledBy,#(lf)internal_user,#(lf)case when v.firm_group = 'Morgan & Morgan' then 'Scheduling' else a.region end as 'region',#(lf)datecreated,#(lf)first_schedule_date,#(lf)appt_date,#(lf)current_status,#(lf)success_result,#(lf)fundeddate,#(lf)cast(datecreated as date) as 'request_day',#(lf)cast(appt_Date as date) as 'appt_day',#(lf)cast(first_schedule_date as date) as 'first_schedule_Day',#(lf)cast(fundeddate as date) as 'funded_Day',#(lf)--first schedule date > 30, 90, 180, 360 then grab schedule time:#(lf)case when first_schedule_date >= DATEADD(DAY, -30, GETDATE()) then Schedule_Time else null end as 'sched1month',#(lf)case when first_schedule_date >= DATEADD(DAY, -90, GETDATE()) then Schedule_Time else null end as 'sched3month',#(lf)case when first_schedule_date >= DATEADD(DAY, -180, GETDATE()) then Schedule_Time else null end as 'sched6month',#(lf)case when first_schedule_date >= DATEADD(DAY, -360, GETDATE()) then Schedule_Time else null end as 'sched12month',#(lf)cast(DATEADD(DAY, 1 - DATEPART(WEEKDAY, first_schedule_date), first_schedule_date) as date) as 'first_schedule_week',#(lf)cast(DATEADD(DAY, 1 - DATEPART(WEEKDAY, appt_Date), appt_Date) as date) as 'appt_week',#(lf)cast(DATEADD(DAY, 1 - DATEPART(WEEKDAY, datecreated), datecreated) as date) as 'request_week',#(lf)cast(DATEADD(DAY, 1 - DATEPART(WEEKDAY, fundeddate), fundeddate) as date) as 'funded_week',#(lf)EOMONTH(datecreated) as 'request_month',#(lf)eomonth(appt_date) as 'appt_month',#(lf)EOMONTH(first_schedule_date) as 'first_schedule_month',#(lf)EOMONTH(fundeddate) as 'first_funded_month',#(lf)case when first_schedule_date is null then 0 else 1 end as 'Scheduled',#(lf)case when appt_date is null then 0 else 1 end as 'seen',#(lf)case when conversiondate is null then 0 else 1 end as 'converted',#(lf)case when fundeddate is null then 0 else 1 end as 'funded',#(lf)--if conversiondate is not null and datecreated is > 30, 90, 180, 360 then grab conversiondate:#(lf)case when conversiondate is not null and DateCreated >= DATEADD(DAY, -30, GETDATE()) then 1 else null end as 'conv1month',#(lf)case when conversiondate is not null and DateCreated >= DATEADD(DAY, -90, GETDATE()) then 1 else null end as 'conv3month',#(lf)case when conversiondate is not null and DateCreated >= DATEADD(DAY, -180, GETDATE()) then 1 else null end as 'conv6month',#(lf)case when conversiondate is not null and DateCreated >= DATEADD(DAY, -360, GETDATE()) then 1 else null end as 'conv12month',#(lf)--If datecreated is > 30, 90, 180, 360 then 1 end as conversion denominator:#(lf)case when DateCreated >= DATEADD(DAY, -30, GETDATE()) then 1 else null end as 'conv1month_Denominator',#(lf)case when DateCreated >= DATEADD(DAY, -90, GETDATE()) then 1 else null end as 'conv3month_Denominator',#(lf)case when DateCreated >= DATEADD(DAY, -180, GETDATE()) then 1 else null end as 'conv6month_Denominator',#(lf)case when DateCreated >= DATEADD(DAY, -360, GETDATE()) then 1 else null end as 'conv12month_Denominator',#(lf)Schedule_time as 'total_time_to_schedule',#(lf)Time_to_seen as 'total_time_to_seen',#(lf)case when datediff(Day,datecreated,getdate()) < 21 then 0 else 1 end as 'recent_filter',#(lf)Procedure_Type as 'Appointment Type',#(lf)FacilityType,#(lf)a.firmname,#(lf)a.lawFirmName,#(lf)a.Enterprise_Name,#(lf)b.RVP as 'rvp',#(lf)first_visit,#(lf)b.region as 'firm_region',#(lf)fo.rank as 'facility_origination_rank',#(lf)fio.rank as 'firm_origination_rank',#(lf)so.rank as 'state_origination_rank',#(lf)rf.rank as 'facility_request_rank',#(lf)rfi.rank as 'firm_request_rank',#(lf)rs.rank as 'state_request_rank',#(lf)1 as 'Count',#(lf)time_to_acct as 'total_time_to_acct',#(lf)time_to_bill as 'total_time_to_bill',#(lf)s.column2 as 'appoitnment service',#(lf)a.State as 'firm_state',#(lf)case when c.count >= 50 then 1 else 0 end as 'high_vol_firm',#(lf)case when d.count >= 50 then 1 else 0 end as 'high_vol_fac',#(lf)case when g.count >= 50 then 1 else 0 end as 'high_vol_enterprise',#(lf)e.RVP as 'fac_rvp',#(lf)e.region as 'fac_region',#(lf)v.Firm_Group,#(lf)canceled,#(lf)a.case_coordinator,#(lf)Canceled_username,#(lf)Canceled_usertype,#(lf)scheduled_canceled,#(lf)canceled_status,#(lf)canceled_by_pt,#(lf)case when (a.facilityname like '%select PT%' or a.facilityname like '%select Physical Therapy%') then 'Select PT' #(lf)#(tab) when (a.facilityname like '%safeway%') then 'Safeway'#(lf)#(tab) when (a.facilityname like '%radnet%') then 'Radnet' #(lf)#(tab) when (a.facilityname like '%healix%') then 'Healix (In-Home)'#(lf)#(tab) when (a.facilityname like '%Bridge Healthcare%') then 'Bridge Healthcare' #(lf)#(tab) when (a.facilityname like '%Savas Health%') then 'Savas Health' #(lf)#(tab) else 'Standard Practice' end as 'Facility_Groups', #(lf)case when (a.facilityname like '%select PT%' or a.facilityname like '%select Physical Therapy%' or a.facilityname like '%safeway%') then 'Non-Standard Practice'#(lf)#(tab) when (a.facilityname like '%radnet%' or a.facilityname like '%healix%' or a.facilityname like '%Bridge Healthcare%'or a.facilityname like '%Savas Health%') #(lf)#(tab) then 'Do Not Schedule' #(lf)#(tab) else 'Standard Practice' end as 'Non-Standard/Do_Not_Schedule_Groups',#(lf)CASE WHEN a.region = 'Total Access' then re.precare_regions #(lf)#(tab)ELSE#(lf)#(tab)case when v.firm_group = 'Morgan & Morgan' then 'Morgan & Morgan'#(lf)#(tab)when a.facilitystate in ('CA', 'NV', 'UT', 'ID', 'MT', 'WY') then 'Western'#(lf)#(tab)when a.FacilityState in ('TX', 'LA', 'AR', 'MO', 'IL', 'WI','MN', 'IA', 'ND','SD','NE','KS') then 'Central'#(lf)#(tab)when a.FacilityState in ('MS','AL','GA','NC','SC','TN','VA','OH','MD','DC','IN','MI','WV','ME') then 'Eastern'#(lf)#(tab)else 'unlabeled' end end as 'scheduling regions',#(lf)#(tab)assigned_user#(lf)from #base a #(lf)LEFT JOIN analytics.dbo.serviceGroups s on a.requiresservices = s.column1#(lf)LEFT JOIN (SELECT FirmId, count(*) as 'count' from #base #(lf)where DateCreated >= @startdate group by FirmId) c on a.FirmId = c.FirmId#(lf)LEFT JOIN (SELECT FacilityId, count(*) as 'count' from #base #(lf)where DateCreated >= @startdate group by FacilityId) d on a.FacilityId = d.facilityid#(lf)LEFT JOIN (SELECT Enterprise_Name, count(*) as 'count' from #base #(lf)where DateCreated >= @startdate group by Enterprise_Name) g on a.Enterprise_Name = g.Enterprise_Name#(lf)LEFT JOIN Analytics.dbo.state_rvp b on a.State = b.state#(lf)LEFT JOIN Analytics.dbo.state_rvp e on a.FacilityState = e.state#(lf)LEFT JOIN #facorigination fo on a.facilityid = fo.Id#(lf)LEFT JOIN #reqbyfac rf on a.Facilityid = rf.FacilityId#(lf)LEFT JOIN #firmorigination fio on a.FirmId = fio.FirmID#(lf)LEFT JOIN #reqbyfirm rfi on a.FirmId = rfi.FirmId#(lf)LEFT JOIN #stateorigination so on a.FacilityState = so.FacilityState#(lf)LEFT JOIN #reqbystate rs on a.FacilityState = rs.FacilityState#(lf)left join analytics.dbo.vipfirms v on c.firmid = v.firm_id#(lf)LEFT JOIN analytics.dbo.firm_market_regions re ON re.state = a.facilitystate#(lf)where datecreated >= @startdate#(lf)--and Canceled_usertype = 'Admin'#(lf)and isnull(fundeddate, getdate()) <= eomonth(getdate())#(lf)order by DateCreated asc#(lf)#(lf)#(lf)/*#(lf)SELECT #(lf)    a.id,#(lf)    COUNT(*) as row_count#(lf)FROM #base a#(lf)GROUP BY a.id#(lf)HAVING COUNT(*) > 1#(lf)*/#(lf)"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Enterprise_Name", "Enterprise"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,3101 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Monthly Throughput Show Slicer",
+  "name": "ed464664d9df39b42cfd",
+  "options": {
+    "targetVisualNames": [],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "56d9e21496d0f6da3a3b",
+    "filters": {
+      "byExpr": [
+        {
+          "name": "499be4edce9651e42194",
+          "type": "RelativeDate",
+          "filter": {
+            "Version": 2,
+            "From": [
+              {
+                "Name": "a",
+                "Entity": "Appt Time And Count",
+                "Type": 0
+              }
+            ],
+            "Where": [
+              {
+                "Condition": {
+                  "Between": {
+                    "Expression": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "a"
+                          }
+                        },
+                        "Property": "request_day"
+                      }
+                    },
+                    "LowerBound": {
+                      "DateSpan": {
+                        "Expression": {
+                          "DateAdd": {
+                            "Expression": {
+                              "DateAdd": {
+                                "Expression": {
+                                  "Now": {}
+                                },
+                                "Amount": 1,
+                                "TimeUnit": 0
+                              }
+                            },
+                            "Amount": -24,
+                            "TimeUnit": 2
+                          }
+                        },
+                        "TimeUnit": 0
+                      }
+                    },
+                    "UpperBound": {
+                      "DateSpan": {
+                        "Expression": {
+                          "Now": {}
+                        },
+                        "TimeUnit": 0
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Appt Time And Count"
+                }
+              },
+              "Property": "request_day"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "56d9e21496d0f6da3a3b": {
+        "visualContainers": {
+          "8cb690a7489e6fd6d9eb": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "26d3121f020aecceafd5": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "2f66041ab50252e08725": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "c1907820098b892a1e7d": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "0965ab1e6f3c80a2276b": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "feb2e41202fb9a0a366c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "6f503a0014a7030e3741",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "a",
+                        "Entity": "Appt Time And Count",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "In": {
+                            "Expressions": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "a"
+                                    }
+                                  },
+                                  "Property": "recent_filter"
+                                }
+                              }
+                            ],
+                            "Values": [
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "1L"
+                                  }
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "recent_filter"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "dffc0dc574a697863ebe",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "First Scheduled %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "82b2141ba105c29dc363",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Conversion %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "10c9fe4941e6a6670bd1",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "131e993b1a8125c6c6da",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0d347f1f1578d04ca8b0",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2515997c82896d0013bd",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "request_month"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "456cd769cc2ffc552c53": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "Filter6c7057922319d0915a19",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Average Time To Scheduled"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "Filterc7ed6eafd0a6c47a2712",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Lower End TTS"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "Filter4e946e04c1302000841e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Upper End TTS"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "f8c3062fe2ea0bbc5e70",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_schedule"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8fd9fbcb0e01b11707da",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ef41b3f06904692272a0",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4dabf8e31cbbc011aa60",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ff33aaab28d75ca95208",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "b2d8622b5071ddc5030d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "Filter3d73a1580b8d97270a4a",
+                  "type": "RelativeDate",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "appt_date"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "7211faa1ee236615e1b7",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9f3ffc60a3e7ab9c2ad2",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_bill"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ],
+              "byType": [
+                {
+                  "name": "Filtercaecdd7ca27470a9c56e",
+                  "type": "Exclude",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "l",
+                        "Entity": "Appt Time And Count",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "In": {
+                                "Expressions": [
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Year"
+                                    }
+                                  },
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Quarter"
+                                    }
+                                  },
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Month"
+                                    }
+                                  },
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Day"
+                                    }
+                                  }
+                                ],
+                                "Values": [
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "2023L"
+                                      }
+                                    },
+                                    {
+                                      "Literal": {
+                                        "Value": "'Qtr 1'"
+                                      }
+                                    },
+                                    {
+                                      "Literal": {
+                                        "Value": "'January'"
+                                      }
+                                    },
+                                    {
+                                      "Literal": {
+                                        "Value": "1L"
+                                      }
+                                    }
+                                  ]
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "howCreated": 4,
+                  "filterExpressionMetadata": {
+                    "expressions": [
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Year"
+                        }
+                      },
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Quarter"
+                        }
+                      },
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Month"
+                        }
+                      },
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Day"
+                        }
+                      }
+                    ],
+                    "cachedValueItems": [
+                      {
+                        "identities": [
+                          {
+                            "scopeId": {
+                              "And": {
+                                "Left": {
+                                  "And": {
+                                    "Left": {
+                                      "And": {
+                                        "Left": {
+                                          "Comparison": {
+                                            "ComparisonKind": 0,
+                                            "Left": {
+                                              "Column": {
+                                                "Expression": {
+                                                  "SourceRef": {
+                                                    "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                                  }
+                                                },
+                                                "Property": "Year"
+                                              }
+                                            },
+                                            "Right": {
+                                              "Literal": {
+                                                "Value": "2023L"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "Right": {
+                                          "Comparison": {
+                                            "ComparisonKind": 0,
+                                            "Left": {
+                                              "Column": {
+                                                "Expression": {
+                                                  "SourceRef": {
+                                                    "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                                  }
+                                                },
+                                                "Property": "Quarter"
+                                              }
+                                            },
+                                            "Right": {
+                                              "Literal": {
+                                                "Value": "'Qtr 1'"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "Right": {
+                                      "Comparison": {
+                                        "ComparisonKind": 0,
+                                        "Left": {
+                                          "Column": {
+                                            "Expression": {
+                                              "SourceRef": {
+                                                "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                              }
+                                            },
+                                            "Property": "Month"
+                                          }
+                                        },
+                                        "Right": {
+                                          "Literal": {
+                                            "Value": "'January'"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "Right": {
+                                  "Comparison": {
+                                    "ComparisonKind": 0,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                          }
+                                        },
+                                        "Property": "Day"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "1L"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "valueMap": {
+                          "0": "2023",
+                          "1": "Qtr 1",
+                          "2": "January",
+                          "3": "1"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "azureMap",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "1e8dfe96b8080051b3d8": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "Filter3d73a1580b8d97270a4a",
+                  "type": "RelativeDate",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "appt_date"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "d7c67aa3031a3ad5d320",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5b8c57026c4a00300ad2",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_seen"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ],
+              "byType": [
+                {
+                  "name": "Filtercaecdd7ca27470a9c56e",
+                  "type": "Exclude",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "l",
+                        "Entity": "Appt Time And Count",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "In": {
+                                "Expressions": [
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Year"
+                                    }
+                                  },
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Quarter"
+                                    }
+                                  },
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Month"
+                                    }
+                                  },
+                                  {
+                                    "HierarchyLevel": {
+                                      "Expression": {
+                                        "Hierarchy": {
+                                          "Expression": {
+                                            "PropertyVariationSource": {
+                                              "Expression": {
+                                                "SourceRef": {
+                                                  "Source": "l"
+                                                }
+                                              },
+                                              "Name": "Variation",
+                                              "Property": "Appt Week"
+                                            }
+                                          },
+                                          "Hierarchy": "Date Hierarchy"
+                                        }
+                                      },
+                                      "Level": "Day"
+                                    }
+                                  }
+                                ],
+                                "Values": [
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "2023L"
+                                      }
+                                    },
+                                    {
+                                      "Literal": {
+                                        "Value": "'Qtr 1'"
+                                      }
+                                    },
+                                    {
+                                      "Literal": {
+                                        "Value": "'January'"
+                                      }
+                                    },
+                                    {
+                                      "Literal": {
+                                        "Value": "1L"
+                                      }
+                                    }
+                                  ]
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "howCreated": 4,
+                  "filterExpressionMetadata": {
+                    "expressions": [
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Year"
+                        }
+                      },
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Quarter"
+                        }
+                      },
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Month"
+                        }
+                      },
+                      {
+                        "HierarchyLevel": {
+                          "Expression": {
+                            "Hierarchy": {
+                              "Expression": {
+                                "PropertyVariationSource": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Appt Time And Count"
+                                    }
+                                  },
+                                  "Name": "Variation",
+                                  "Property": "Appt Week"
+                                }
+                              },
+                              "Hierarchy": "Date Hierarchy"
+                            }
+                          },
+                          "Level": "Day"
+                        }
+                      }
+                    ],
+                    "cachedValueItems": [
+                      {
+                        "identities": [
+                          {
+                            "scopeId": {
+                              "And": {
+                                "Left": {
+                                  "And": {
+                                    "Left": {
+                                      "And": {
+                                        "Left": {
+                                          "Comparison": {
+                                            "ComparisonKind": 0,
+                                            "Left": {
+                                              "Column": {
+                                                "Expression": {
+                                                  "SourceRef": {
+                                                    "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                                  }
+                                                },
+                                                "Property": "Year"
+                                              }
+                                            },
+                                            "Right": {
+                                              "Literal": {
+                                                "Value": "2023L"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "Right": {
+                                          "Comparison": {
+                                            "ComparisonKind": 0,
+                                            "Left": {
+                                              "Column": {
+                                                "Expression": {
+                                                  "SourceRef": {
+                                                    "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                                  }
+                                                },
+                                                "Property": "Quarter"
+                                              }
+                                            },
+                                            "Right": {
+                                              "Literal": {
+                                                "Value": "'Qtr 1'"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "Right": {
+                                      "Comparison": {
+                                        "ComparisonKind": 0,
+                                        "Left": {
+                                          "Column": {
+                                            "Expression": {
+                                              "SourceRef": {
+                                                "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                              }
+                                            },
+                                            "Property": "Month"
+                                          }
+                                        },
+                                        "Right": {
+                                          "Literal": {
+                                            "Value": "'January'"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "Right": {
+                                  "Comparison": {
+                                    "ComparisonKind": 0,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Entity": "LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6"
+                                          }
+                                        },
+                                        "Property": "Day"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "1L"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "valueMap": {
+                          "0": "2023",
+                          "1": "Qtr 1",
+                          "2": "January",
+                          "3": "1"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "azureMap",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "f2ce0d80c006ddd08485": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "Filter6c7057922319d0915a19",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Average Time To Scheduled"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "Filterc7ed6eafd0a6c47a2712",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Lower End TTS"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "Filter4e946e04c1302000841e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Upper End TTS"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "f8c3062fe2ea0bbc5e70",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_schedule"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "8fd9fbcb0e01b11707da",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "ef41b3f06904692272a0",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "4dabf8e31cbbc011aa60",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "ff33aaab28d75ca95208",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "1386333c42469e7d6eeb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Upper End TTF"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "18ae95ebb8bb078a36cb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_bill"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9169ffc0c61d3b030a07",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Lower End TTF"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "08c11ae84c253c503738",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "funded_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5fa0fa2e706cb2e07390",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "funded_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d78391c678489018d003",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "funded_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "funded_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "funded_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "e0d250b8c5c62150a32b": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "Filter6c7057922319d0915a19",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Average Time To Scheduled"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "Filterc7ed6eafd0a6c47a2712",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Lower End TTS"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "Filter4e946e04c1302000841e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Upper End TTS"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "f8c3062fe2ea0bbc5e70",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_schedule"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "8fd9fbcb0e01b11707da",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ef41b3f06904692272a0",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4dabf8e31cbbc011aa60",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ff33aaab28d75ca95208",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "26322bbf54325c20d05c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Lower End TTSe"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9c82e50b5d0a0094d13c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Appt Time And Count"
+                            }
+                          },
+                          "Property": "total_time_to_seen"
+                        }
+                      },
+                      "Function": 1
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "12224d5e149965ce0911",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Upper End TTSe"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Quarter"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "PropertyVariationSource": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Appt Time And Count"
+                                }
+                              },
+                              "Name": "Variation",
+                              "Property": "first_schedule_week"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ca2279980016a812d0d3": {
+            "singleVisual": {
+              "visualType": "bookmarkNavigator",
+              "objects": {}
+            }
+          },
+          "ad6d8a18c159b1602e64": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "dadee73ca76841636d15",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Non-Standard/Do_Not_Schedule_Groups"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Non-Standard/Do_Not_Schedule_Groups"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "a5cb899a3a742094ed2a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8562ea70e24311792c2d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Firm_Group"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Firm_Group"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "50ce13a70c10b8d38442": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d26fc2945e18166aa051",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Facility_Groups"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "Facility_Groups"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "10ddd07dcd9d35a3bc34": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f8d2fd5a01183b5b0c6c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "appoitnment service"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "appoitnment service"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "0716caeb0e4e00e61360": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8e55efca79a4c8c1922d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "current_status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "current_status"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "0d37777a7bd896001a18": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "2567e48973ae0eb4a57e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firmname"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firmname"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "181b5f29105414732590": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "5ba11335b00c9b8aaa3a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "first_visit"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "first_visit"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8ba69801eb96606c0e20": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e19260b657507da03321",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "scheduling regions"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "a",
+                                "Entity": "Appt Time And Count",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "a"
+                                            }
+                                          },
+                                          "Property": "scheduling regions"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "'Western'"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "scheduling regions"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "4b13c4d17ccd4762e0de": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e108e200c81d5db21d40",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "ScheduledBy"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "ScheduledBy"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "bdb18b14ce5d85a06032": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "036d0a32050807572a60",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "region"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "region"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "82e94fc04695d74985ed": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "352fe1ebba70a667cbb6",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "internal_user"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "internal_user"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8e98d8c8c14e7c09456d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8bd15710014e043170e8",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "FacilityState"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "aa0f7c5a79bd03ae941e": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d2362efc2b662ab1c820",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "facilityname"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "facilityname"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "92430c29c1ceba6d5bd7": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ec50d2c703378e073731",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firm_state"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "firm_state"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8c1fd12976e616942b78": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "4ec5ff5f0ebca400e4d0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "rvp"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Basic'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "rvp"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "247affc83b0ab51c959b": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a196ef1b0c33ca92e0ee",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_day"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_day"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Appt Time And Count"
+                        }
+                      },
+                      "Property": "request_day"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "fb76a208379150050791": {
+            "isHidden": false
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

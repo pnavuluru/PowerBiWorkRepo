@@ -1,0 +1,28 @@
+table 'Prior Period Dates'
+	lineageTag: 2ab3e4af-99a9-42ed-a090-f7d8153f68cc
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f92b8f26-c4a3-43ef-941a-4f71ac15e741
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: fcf30466-714d-4667-a11d-3742d3b18789
+			defaultHierarchy: LocalDateTable_410b51ce-8b47-4837-81c2-15cab5a043ef.'Date Hierarchy'
+
+		annotation SummarizationSetBy = User
+
+	partition 'Prior Period Dates' = calculated
+		mode: import
+		source =
+				SELECTCOLUMNS(
+				    CALENDAR(
+				        MINX('Appt Time And Count', 'Appt Time And Count'[datecreated]),
+				        MAXX('Appt Time And Count', 'Appt Time And Count'[datecreated])
+				    ),
+				    "Date", [Date]
+				)
+

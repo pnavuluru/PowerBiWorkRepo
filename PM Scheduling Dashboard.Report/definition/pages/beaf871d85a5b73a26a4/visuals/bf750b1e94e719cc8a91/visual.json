@@ -1,0 +1,92 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "bf750b1e94e719cc8a91",
+  "position": {
+    "x": 190.51162790697674,
+    "y": 169.67441860465115,
+    "z": 17000,
+    "height": 97.240310077519382,
+    "width": 231.19379844961242,
+    "tabOrder": 19000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "request_day"
+                }
+              },
+              "queryRef": "Appt Time And Count.request_day",
+              "nativeQueryRef": "Request Day",
+              "active": true,
+              "displayName": "Request Day"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Appt Time And Count"
+                  }
+                },
+                "Property": "request_day"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Between'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "644736d27e6140a336a6",
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a263e154bf626eca05d5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "request_day"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

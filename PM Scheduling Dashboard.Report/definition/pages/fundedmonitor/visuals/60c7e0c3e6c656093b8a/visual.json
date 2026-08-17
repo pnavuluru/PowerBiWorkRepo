@@ -1,0 +1,318 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "60c7e0c3e6c656093b8a",
+  "position": {
+    "x": 605.85365853658539,
+    "y": 73.170731707317074,
+    "z": 3000,
+    "height": 309.26829268292687,
+    "width": 663.41463414634154,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "request_month"
+                }
+              },
+              "queryRef": "Appt Time And Count.request_month",
+              "nativeQueryRef": "request_month",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Scheduled %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Scheduled %",
+              "nativeQueryRef": "Trend Toggle - Scheduled %",
+              "displayName": "Scheduled %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Scheduled in 3D %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Scheduled in 3D %",
+              "nativeQueryRef": "Trend Toggle - Scheduled in 3D %",
+              "displayName": "Scheduled in 3D %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Scheduled in 7D %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Scheduled in 7D %",
+              "nativeQueryRef": "Trend Toggle - Scheduled in 7D %",
+              "displayName": "Scheduled in 7D %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Scheduled in 10D %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Scheduled in 10D %",
+              "nativeQueryRef": "Trend Toggle - Scheduled in 10D %",
+              "displayName": "Scheduled in 10D %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Appt Time And Count"
+                  }
+                },
+                "Property": "request_month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Schedule SLA Trend (MoM/WoW)'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#26417E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "divider": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "46335866b30816401606",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "request_month"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "34aca0336c19a6843cbe",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Scheduled %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "12429cc7467c59910503",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Scheduled in 3D %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9dacf967c000ac849b03",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Scheduled in 7D %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "506e4c906cd263178078",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Scheduled in 10D %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

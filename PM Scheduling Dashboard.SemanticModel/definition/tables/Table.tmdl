@@ -1,0 +1,24 @@
+table Table
+	lineageTag: a262417b-1d24-4520-8cbe-252bd6ff2fb2
+
+	column Headers
+		dataType: string
+		lineageTag: a5623a2e-b6c8-46b6-bbad-97cb75ddf2dc
+		summarizeBy: none
+		sourceColumn: Headers
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Table-6fc9be48-e904-4942-8554-615bb437df2c = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WciotzsxLLS5W8C/PSy1SitWJVgpJTc7Iy0xOzMEq5pSYnF1aABYMSExPLQazXFLTMvMySzLz84D8WAA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Headers = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Headers", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "PM Scheduling Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f7032436-a03a-4982-86ee-9aa6b3cd68eb"
+  }
+}

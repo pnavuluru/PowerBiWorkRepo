@@ -1,0 +1,53 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Appt Time And Count","Table","Scheduling Breakdown","Status Movement"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_0807b3aa-416a-462f-ae3b-2a425ddf01a5
+ref table 'Appt Time And Count'
+ref table LocalDateTable_0bdcfb4d-4a96-4715-8e38-c19a0a553031
+ref table Table
+ref table LocalDateTable_5c8c00b3-f64a-419a-916e-8904910ffae7
+ref table LocalDateTable_9aa972c5-ec4d-4e44-9b8c-6979f6edb54d
+ref table LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6
+ref table 'Scheduling Breakdown'
+ref table LocalDateTable_98d8c2f3-001f-4a2c-bf19-a704fb6b5f7f
+ref table LocalDateTable_bfcb9b6e-ac77-4f86-9658-5b12b9bce4f3
+ref table LocalDateTable_ffe74d72-d991-48ef-85ab-e2514b913e79
+ref table LocalDateTable_1e45d379-24b2-4a6b-b81f-88a138cb61f8
+ref table LocalDateTable_e12cdbbe-ffb2-404c-a793-17fda3631d0b
+ref table LocalDateTable_40cd4a2a-670d-4ee9-918f-1d53d9d00060
+ref table LocalDateTable_55308e4b-db27-4e28-b6da-de0a061316d4
+ref table LocalDateTable_9bad09a2-7031-4a72-9899-094cc00baaea
+ref table LocalDateTable_8bcbd3d4-16d5-4333-a5d5-658823d6ada4
+ref table LocalDateTable_d8d60124-5ce7-4648-8885-571fef9516a0
+ref table LocalDateTable_08a7a7e4-80fb-4373-9152-7c04185de5c8
+ref table LocalDateTable_d7c03d0f-5cf4-4313-958a-711d9bae1122
+ref table LocalDateTable_1925d46d-d8af-4a46-9b8c-230e72de8781
+ref table LocalDateTable_d88c9140-d2f0-40e3-8931-73e8af3b062b
+ref table LocalDateTable_1e528369-5668-4735-a018-452278a1b52a
+ref table LocalDateTable_82e0fe72-7980-4a4a-bdc9-e02b32cb74cf
+ref table LocalDateTable_3bc2f87c-68a6-4718-97a4-1c82bada6d12
+ref table 'Status Movement'
+ref table 'Trend Granularity'
+ref table 'SLA Metric Selector'
+ref table 'Prior Period Dates'
+ref table 'Current Period Dates'
+ref table 'SLA Metric Notes'
+ref table 'Scheduled Trend Series Selector'
+ref table 'Funded Trend Series Selector'
+ref table 'Comparision Parameter'
+ref table LocalDateTable_410b51ce-8b47-4837-81c2-15cab5a043ef
+ref table LocalDateTable_9120d23a-6447-401c-a7b0-a3457bab7497
+
+ref cultureInfo en-US
+

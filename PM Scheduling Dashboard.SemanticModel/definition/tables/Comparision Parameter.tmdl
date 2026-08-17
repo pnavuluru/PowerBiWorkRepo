@@ -1,0 +1,53 @@
+table 'Comparision Parameter'
+	lineageTag: daa1a43d-575b-42c9-9e3f-d57c9a2a74d2
+
+	column 'Comparision Parameter'
+		lineageTag: 38a4e3d6-43e9-495e-a9bc-5a5a2e0222a2
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Comparision Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Comparision Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Comparision Parameter Fields'
+		isHidden
+		lineageTag: 0cbd3455-b653-4aa8-b321-a637b8551eaf
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Comparision Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Comparision Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: c0af87cf-bd6a-4714-8815-f37b9ccaa9e1
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Comparision Parameter' = calculated
+		mode: import
+		source =
+				{
+				    ("Firm Group", NAMEOF('Appt Time And Count'[Firm_Group]), 0),
+				    ("Firm Region", NAMEOF('Appt Time And Count'[firm_region]), 1),
+				    ("Firm State", NAMEOF('Appt Time And Count'[firm_state]), 2),
+				    ("Firm Name", NAMEOF('Appt Time And Count'[firmname]), 3),
+				    ("facilityname", NAMEOF('Appt Time And Count'[facilityname]), 4),
+				    ("FacilityState", NAMEOF('Appt Time And Count'[FacilityState]), 5),
+				    ("Enterprise", NAMEOF('Appt Time And Count'[Enterprise]), 6)
+				}
+
+	annotation PBI_Id = 5d5bcd25ae594b58b28729f4c22941fc
+

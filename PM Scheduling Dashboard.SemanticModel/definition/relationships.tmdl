@@ -1,0 +1,119 @@
+relationship 5bd7e6fd-cf08-4898-9059-42185176d3d5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.request_week
+	toColumn: LocalDateTable_0bdcfb4d-4a96-4715-8e38-c19a0a553031.Date
+
+relationship 5b7ee5cf-bffb-4619-a4ff-040dbf76c2cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.'Schedule Week'
+	toColumn: LocalDateTable_5c8c00b3-f64a-419a-916e-8904910ffae7.Date
+
+relationship f634335b-0ec7-420f-955b-19c6f2920053
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.appt_date
+	toColumn: LocalDateTable_9aa972c5-ec4d-4e44-9b8c-6979f6edb54d.Date
+
+relationship 23ee0175-52bd-4697-9c90-aa43e00a3664
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.'Appt Week'
+	toColumn: LocalDateTable_36f6af7b-5346-49e5-bbc6-3b5e516e35e6.Date
+
+relationship 808b8bf0-3af7-4107-883f-9ac51ee8650f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Scheduling Breakdown'.CreatedDate
+	toColumn: LocalDateTable_98d8c2f3-001f-4a2c-bf19-a704fb6b5f7f.Date
+
+relationship 75067182-77dc-47a1-8c98-bfbea4a58a69
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Scheduling Breakdown'.date_scheduled
+	toColumn: LocalDateTable_bfcb9b6e-ac77-4f86-9658-5b12b9bce4f3.Date
+
+relationship d2d6b791-b1cd-424d-9add-2d4413984cf8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Scheduling Breakdown'.mo_requested
+	toColumn: LocalDateTable_ffe74d72-d991-48ef-85ab-e2514b913e79.Date
+
+relationship 5baa2402-daa6-4a41-b720-a0a256faae13
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.datecreated
+	toColumn: LocalDateTable_1e45d379-24b2-4a6b-b81f-88a138cb61f8.Date
+
+relationship 204e1296-c276-470e-a528-8a3adae1c95b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.first_schedule_date
+	toColumn: LocalDateTable_e12cdbbe-ffb2-404c-a793-17fda3631d0b.Date
+
+relationship 51250178-7ecb-48d8-b73d-6e1ce14d80f8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.request_day
+	toColumn: LocalDateTable_40cd4a2a-670d-4ee9-918f-1d53d9d00060.Date
+
+relationship 9eabae49-db74-4870-a317-f6af2a830725
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.appt_day
+	toColumn: LocalDateTable_55308e4b-db27-4e28-b6da-de0a061316d4.Date
+
+relationship 28107c62-07c3-4f72-8496-04190b729506
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.first_schedule_Day
+	toColumn: LocalDateTable_9bad09a2-7031-4a72-9899-094cc00baaea.Date
+
+relationship d0516b30-93f3-44fc-af3c-24dde808f584
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.first_schedule_week
+	toColumn: LocalDateTable_8bcbd3d4-16d5-4333-a5d5-658823d6ada4.Date
+
+relationship 9819596f-3d31-43ce-8dcc-443ef9d91517
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.appt_week
+	toColumn: LocalDateTable_d8d60124-5ce7-4648-8885-571fef9516a0.Date
+
+relationship e5cba507-0c54-4189-b1df-3b09cf6832b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.request_month
+	toColumn: LocalDateTable_08a7a7e4-80fb-4373-9152-7c04185de5c8.Date
+
+relationship 6f524f78-d101-4597-a928-03d69914f288
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.appt_month
+	toColumn: LocalDateTable_d7c03d0f-5cf4-4313-958a-711d9bae1122.Date
+
+relationship 59c812a3-178e-4226-9ac6-43fd6bfe552b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.first_schedule_month
+	toColumn: LocalDateTable_1925d46d-d8af-4a46-9b8c-230e72de8781.Date
+
+relationship d9f23b8c-837f-42b3-accf-19efda9017da
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.fundeddate
+	toColumn: LocalDateTable_d88c9140-d2f0-40e3-8931-73e8af3b062b.Date
+
+relationship 28288d18-d40e-4e21-8fcc-214a7184d75f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.funded_Day
+	toColumn: LocalDateTable_1e528369-5668-4735-a018-452278a1b52a.Date
+
+relationship 2eae6ac5-f92a-4936-8328-74f04bfc1b9c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.funded_week
+	toColumn: LocalDateTable_82e0fe72-7980-4a4a-bdc9-e02b32cb74cf.Date
+
+relationship 365b168b-1aa9-42cc-8208-b30d432be567
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Appt Time And Count'.first_funded_month
+	toColumn: LocalDateTable_3bc2f87c-68a6-4718-97a4-1c82bada6d12.Date
+
+relationship 2d3700fd-577e-0692-9749-2db15839adde
+	fromColumn: 'Status Movement'.id
+	toColumn: 'Appt Time And Count'.id
+
+relationship fcf30466-714d-4667-a11d-3742d3b18789
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Prior Period Dates'.Date
+	toColumn: LocalDateTable_410b51ce-8b47-4837-81c2-15cab5a043ef.Date
+
+relationship 801594c9-ea42-4fd0-8cfe-c71f2eddfd1e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Current Period Dates'.Date
+	toColumn: LocalDateTable_9120d23a-6447-401c-a7b0-a3457bab7497.Date
+

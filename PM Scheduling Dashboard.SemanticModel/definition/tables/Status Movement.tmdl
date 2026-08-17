@@ -1,0 +1,71 @@
+table 'Status Movement'
+	lineageTag: 3320a847-34f5-4793-a081-73b8bcbaa35d
+
+	measure 'Avg Cycle Time' = SUM('Status Movement'[time in])/SUM('Status Movement'[times])
+		lineageTag: bad9e0b2-e048-443a-9fe5-9a46e397c544
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column id
+		dataType: string
+		lineageTag: d6e2282f-743f-49d1-8bf2-ca4debe70563
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduledby
+		dataType: string
+		lineageTag: bb748988-69cf-465c-a5fa-58ec8ee68905
+		summarizeBy: none
+		sourceColumn: scheduledby
+
+		annotation SummarizationSetBy = Automatic
+
+	column internal_user
+		dataType: string
+		lineageTag: af1d16bf-1579-4ef1-9a49-e2722237b926
+		summarizeBy: none
+		sourceColumn: internal_user
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: b3816689-6757-4be2-b88c-94694bd20f26
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'time in'
+		dataType: double
+		lineageTag: 967e08b4-a3e7-4c4e-8ce6-0eee36d74aed
+		summarizeBy: sum
+		sourceColumn: time in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column times
+		dataType: int64
+		formatString: 0
+		lineageTag: d73ecd69-5357-4a54-a905-5af937576efe
+		summarizeBy: sum
+		sourceColumn: times
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Status Movement' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("medprdsql02.canyonmedicalbilling.com", "MoveDocsV4", [Query="SELECT#(lf)#(tab)sourceid as id,#(lf)#(tab)createddate,#(lf)#(tab)case when createdby not like '%@movedocs.com' and createdby not like '%@medportbilling.com' and createdby not like '%@lienservicinggroup.com'#(lf)#(tab)and createdby not like '%@medport.com' and createdby not like '%@canyonmedicalbilling.com' and createdby not like '%@trimed-billing.com'#(lf)#(tab)and createdby not like 'ssomb%' and createdby not like 'sssomb%' then 'External' else 'Internal' end as 'ScheduledBy',#(lf)#(tab)case when createdby not like '%@movedocs.com' and createdby not like '%@medportbilling.com' and createdby not like '%@lienservicinggroup.com'#(lf)and createdby not like '%@medport.com' and createdby not like '%@canyonmedicalbilling.com' and createdby not like '%@trimed-billing.com'#(lf)and createdby not like 'ssomb%' and createdby not like 'sssomb%' then 'External' else left(createdby, charindex('@', createdby)-1) end as internal_user,#(lf)#(tab)case when OldValue in ('Viewed','Pending Patient Response','Unable to Reach Patient') and NewValue not in ('Viewed','Pending Patient Response','Unable to Reach Patient')#(lf)#(tab)#(tab)then 'pending'#(lf)#(tab)#(tab)when OldValue in ('Canceled','Canceled by Patient','Declined by Provider') and NewValue not in ('Canceled','Canceled by Patient','Declined by Provider')#(lf)#(tab)#(tab)then 'no success'#(lf)#(tab)#(tab)when OldValue in ('Appointment Scheduled','Patient Seen') and NewValue not in ('Appointment Scheduled','Patient Seen')#(lf)#(tab)#(tab)then 'success'#(lf)#(tab)#(tab)when OldValue in ('Hold - Pending Request Review','Hold – Case Review','Hold - Case Review','Needs Approval','No Show','Reschedule Needed') #(lf)#(tab)#(tab)and NewValue not in ('Hold - Pending Request Review','Hold – Case Review','Hold - Case Review','Needs Approval','No Show','Reschedule Needed')#(lf)#(tab)#(tab)then 'rework'#(lf)#(tab)#(tab)when OldValue like 'New%' and newvalue not like 'New%' then 'firstchange'#(lf)#(tab)#(tab)else 'no change' end as 'type'#(lf)into #base#(lf)FROM MoveDocsV4.dbo.AuditLogs#(lf)where Module = 'appointment request' and action = 'Status Change'#(lf)#(tab)and NewValue not in ('began','canceled - location changed')#(lf)#(tab)and CreatedDate >= '2023-01-01'#(lf)#(lf)SELECT#(lf)#(tab)b.id,#(lf)#(tab)type,#(lf)#(tab)CreatedDate,#(lf)#(tab)ScheduledBy,#(lf)#(tab)internal_user,#(lf)#(tab)lag(createddate,1,ar.DateCreated) over (partition by b.id order by createddate) as 'previous_date'#(lf)into #setup#(lf)FROM #base b#(lf)#(tab)left join MoveDocsV4.dbo.AppointmentRequests ar on b.id = ar.Id#(lf)#(tab)left join financemetrics.dbo._snapshot_cimianalysisanalytics caa on caa.AccountId = ar.dosaccountid#(lf)#(tab)#(lf)#(tab)#(lf)where type <> 'no change'#(lf)and #(tab)isnull(location,'j') not like '%grs%'#(tab)#(tab)#(tab)and #(tab)#(lf)isnull(location,'j') not in ('IFA','IFI','OHF','OHC','TMC','TDC')#(tab)#(tab)#(lf)SELECT#(lf)#(tab)id,#(lf)#(tab)scheduledby,#(lf)#(tab)internal_user,#(lf)#(tab)type,#(lf)#(tab)sum(case when datepart(dw,previous_date) = 1 and (datediff(hour, previous_date,CreatedDate)/24.0) - 1 - (2*datediff(wk, previous_date,CreatedDate)) >= 0#(lf)#(tab)#(tab)#(tab)#(tab)then (datediff(hour, previous_date,CreatedDate)/24.0) - 1 - (2*datediff(wk, previous_date,CreatedDate))#(lf)#(tab)#(tab)#(tab)when datepart(dw,previous_date) = 1 and (datediff(hour, previous_date,CreatedDate)/24.0) - 1 - (2*datediff(wk, previous_date,CreatedDate)) < 0#(lf)#(tab)#(tab)#(tab)#(tab)then 0#(lf)#(tab)#(tab)#(tab)when (datediff(hour, previous_date,CreatedDate)/24.0) - (2*datediff(wk, previous_date,CreatedDate)) > 0#(lf)#(tab)#(tab)#(tab)#(tab)then (datediff(hour, previous_date,CreatedDate)/24.0) - (2*datediff(wk, previous_date,CreatedDate))#(lf)#(tab)#(tab)#(tab)else 0 end) as 'time in',#(lf)#(tab)count(*) as 'times'#(lf)FROM #setup#(lf)group by #(lf)#(tab)id,#(lf)#(tab)scheduledby,#(lf)#(tab)internal_user,#(lf)#(tab)type"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

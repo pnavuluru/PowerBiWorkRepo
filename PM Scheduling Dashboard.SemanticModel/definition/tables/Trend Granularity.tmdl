@@ -1,0 +1,15 @@
+table 'Trend Granularity'
+	lineageTag: 1f30426f-6af5-40f0-81a4-bf6f743f7e84
+
+	column Mode
+		dataType: string
+		lineageTag: 56ddf3c1-d6f5-4c2f-9f17-274dcb8f96cf
+		summarizeBy: none
+		sourceColumn: [Mode]
+
+		annotation SummarizationSetBy = User
+
+	partition 'Trend Granularity' = calculated
+		mode: import
+		source = DATATABLE("Mode", STRING, {{"MoM"}, {"WoW"}})
+

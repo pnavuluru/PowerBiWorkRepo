@@ -1,0 +1,28 @@
+table 'Current Period Dates'
+	lineageTag: 3ac0d7e2-2d9a-4600-99eb-7e5c5f2054a8
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 1b2686b0-eabc-4f0a-a4d4-b65a84e84e84
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 801594c9-ea42-4fd0-8cfe-c71f2eddfd1e
+			defaultHierarchy: LocalDateTable_9120d23a-6447-401c-a7b0-a3457bab7497.'Date Hierarchy'
+
+		annotation SummarizationSetBy = User
+
+	partition 'Current Period Dates' = calculated
+		mode: import
+		source =
+				SELECTCOLUMNS(
+				    CALENDAR(
+				        MINX('Appt Time And Count', 'Appt Time And Count'[datecreated]),
+				        MAXX('Appt Time And Count', 'Appt Time And Count'[datecreated])
+				    ),
+				    "Date", [Date]
+				)
+

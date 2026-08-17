@@ -1,0 +1,85 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "Bookmarke4e95342c46bd0b1ccc9",
+      "displayName": "Schedule",
+      "children": [
+        "Bookmark5209f615c1a127097176",
+        "Bookmark652d5e951933355e0310",
+        "Bookmarkb31fec1414a2312965e1"
+      ]
+    },
+    {
+      "name": "01cad544adb4030c1a05",
+      "displayName": "Firm/Facility",
+      "children": [
+        "851f6c0c0e9d3c45907e",
+        "49aad5e6ee8ba1d07638"
+      ]
+    },
+    {
+      "name": "Bookmark65a37801677cb0579bc9",
+      "displayName": "Queue",
+      "children": [
+        "Bookmark82fc3acf22de3c0b1c6d",
+        "Bookmarked42371c0670b1104bd2",
+        "Bookmark2d70f4a6c1a4176968d2"
+      ]
+    },
+    {
+      "name": "2df08a641d7aa3eb4a34",
+      "displayName": "Cycle Time",
+      "children": [
+        "5cc8a675e7c883298876",
+        "9dffaccf9cba0656ebd8",
+        "4e17916d8ddebe475ed6"
+      ]
+    },
+    {
+      "name": "323a16007533be206bd4",
+      "displayName": "ST Breakouts",
+      "children": [
+        "94dc5ba0c1ab93cca8e6",
+        "80a68c00560bd4859e08",
+        "806b943dd1e8096d02ae"
+      ]
+    },
+    {
+      "name": "8ff44f46a46656e08a37"
+    },
+    {
+      "name": "327f6aa6b96f08cdd16a"
+    },
+    {
+      "name": "ed464664d9df39b42cfd"
+    },
+    {
+      "name": "4721a1c5ccd35c780dce"
+    },
+    {
+      "name": "f3f287700a0846eda129"
+    },
+    {
+      "name": "d6f760d3d595019728e4"
+    },
+    {
+      "name": "c095b87654cda9b649a0"
+    },
+    {
+      "name": "543da202a0c8e4552a4b"
+    },
+    {
+      "name": "ee1ef96098a77c1e9dce"
+    },
+    {
+      "name": "53cf65ed75117b2ddae0"
+    },
+    {
+      "name": "42fc45e70eb8607b3ca3"
+    },
+    {
+      "name": "cc7d4fa89d7f2b6fcad6"
+    }
+  ]
+}

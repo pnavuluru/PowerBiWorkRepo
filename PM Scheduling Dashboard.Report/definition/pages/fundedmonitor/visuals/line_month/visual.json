@@ -1,0 +1,305 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "line_month",
+  "position": {
+    "x": 13.658536585365855,
+    "y": 72.195121951219519,
+    "z": 1000,
+    "height": 310.2439024390244,
+    "width": 585.36585365853659,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "request_month"
+                }
+              },
+              "queryRef": "Appt Time And Count.request_month",
+              "nativeQueryRef": "request_month",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Funded %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Funded %",
+              "nativeQueryRef": "Trend Toggle - Funded %",
+              "displayName": "Funded %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Funded in 30D %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Funded in 30D %",
+              "nativeQueryRef": "Trend Toggle - Funded in 30D %",
+              "displayName": "Funded in 30D %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Funded in 60D %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Funded in 60D %",
+              "nativeQueryRef": "Trend Toggle - Funded in 60D %",
+              "displayName": "Funded in 60D %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appt Time And Count"
+                    }
+                  },
+                  "Property": "Trend Toggle - Funded in 90D %"
+                }
+              },
+              "queryRef": "Appt Time And Count.Trend Toggle - Funded in 90D %",
+              "nativeQueryRef": "Trend Toggle - Funded in 90D %",
+              "displayName": "Funded in 90D %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Appt Time And Count"
+                  }
+                },
+                "Property": "request_month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Funded SLA Trend (MoM/WoW)'"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#26417E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "77cf2cf86e7220e9268b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "request_month"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d76022a747a9581e0ab0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Funded %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1f2feac8050015260c07",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Funded in 30D %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "87d7d1d24d50d61626d3",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Funded in 60D %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5639607ae20ed31bc567",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Appt Time And Count"
+              }
+            },
+            "Property": "Trend Toggle - Funded in 90D %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
